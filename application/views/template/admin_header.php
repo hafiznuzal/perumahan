@@ -51,8 +51,8 @@
 
 
 	<!--LEAFLET-->
-	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+	<link rel="stylesheet" href="<?php echo base_url('assets/css/leaflet.css')?>" />
+	<script src="<?php echo base_url('assets/js/leaflet.js')?>"></script>
 
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
