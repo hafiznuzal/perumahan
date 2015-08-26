@@ -101,21 +101,21 @@
 										<?php $c=1;foreach ($pembangunan as $i) {?>
 										<tr class="odd gradeX">
 											<td><?php echo $c?></td>
-											<td><?php echo $i['nama_kecamatan']?></td>
-											<td><?php echo $i['nama_perusahaan']?></td>
-											<td><?php echo $i['nama_perumahan']?></td>
-											<td><?php echo $i['nama_lokasi']?></td>
-											<td><?php echo $i['renc_rss']?></td>
-											<td><?php echo $i['renc_rs']?></td>
-											<td><?php echo $i['renc_rm']?></td>
-											<td><?php echo $i['renc_mw']?></td>
-											<td><?php echo $i['renc_ruko']?></td>
-											<td><?php echo $i['real_rss']?></td>
-											<td><?php echo $i['real_rs']?></td>
-											<td><?php echo $i['real_rm']?></td>
-											<td><?php echo $i['real_mw']?></td>
-											<td><?php echo $i['real_ruko']?></td>
-											<td><?php echo $i['catatan']?></td>
+											<td><?php echo $i['NAMA_KECAMATAN']?></td>
+											<td><?php echo $i['NAMA_PERUSAHAAN']?></td>
+											<td><?php echo $i['NAMA_PERUMAHAN']?></td>
+											<td><?php echo $i['NAMA_LOKASI']?></td>
+											<td><?php echo $i['RENC_RSS']?></td>
+											<td><?php echo $i['RENC_RS']?></td>
+											<td><?php echo $i['RENC_RM']?></td>
+											<td><?php echo $i['RENC_MW']?></td>
+											<td><?php echo $i['RENC_RUKO']?></td>
+											<td><?php echo $i['REAL_RSS']?></td>
+											<td><?php echo $i['REAL_RS']?></td>
+											<td><?php echo $i['REAL_RM']?></td>
+											<td><?php echo $i['REAL_MW']?></td>
+											<td><?php echo $i['REAL_RUKO']?></td>
+											<td><?php echo $i['CATATAN']?></td>
 											
 										</tr>
 										<?php $c++;} ?>
