@@ -93,6 +93,20 @@ class m_report extends CI_Model
 		$data = $query->result_array();
 		return $data;
 	}
+	public function tabel_pembangunan_kecamatan_pertahun_all($tahun)
+	{
+		$sql = "SELECT NAMA_KECAMATAN, COUNT( NAMA_LOKASI ) AS JML_LOKASI, SUM( RENC_RSS ) AS RENC_RSS, SUM( RENC_RS ) AS RENC_RS, SUM( RENC_RM ) AS RENC_RM, SUM( RENC_MW ) AS RENC_MW, SUM( RENC_RUKO ) AS RENC_RUKO, SUM( REAL_RSS ) AS REAL_RSS, SUM( REAL_RS ) AS REAL_RS, SUM( REAL_RM ) AS REAL_RM, SUM( REAL_MW ) AS REAL_MW, SUM( REAL_RUKO ) AS REAL_RUKO, PEM.CATATAN AS CATATAN
+				FROM PEMBANGUNAN AS PEM
+				JOIN LOKASI AS LOK ON PEM.ID_LOKASI = LOK.ID_LOKASI
+				JOIN PERUMAHAN AS PRM ON PEM.ID_PERUMAHAN = PRM.ID_PERUMAHAN
+				JOIN PERUSAHAAN AS PRS ON PRS.ID_PERUSAHAAN = PRM.ID_PERUSAHAAN
+				JOIN KECAMATAN AS KEC ON KEC.ID_KECAMATAN = LOK.ID_KECAMATAN
+				WHERE PEM.TAHUN = '$tahun'
+				GROUP BY KEC.ID_KECAMATAN" ;
+		$query = $this->db->query($sql);
+		$data = $query->result_array();
+		return $data;
+	}
 
 	public function pembangunan_kecamatan_jml_lokasiprm($id_kecamatan)
 	{
@@ -268,7 +282,7 @@ class m_report extends CI_Model
 	{
 		$sql = "SELECT COUNT(ID_PEMBANGUNAN) AS JML_LOKASI,TRIWULAN,TAHUN
 				FROM PEMBANGUNAN AS PEM
-				GROUP BY CONCAT(PEM.TRIWULAN,'_',PEM.TAHUN)";
+				GROUP BY CONCAT(PEM.TRIWULAN,'_',PEM.TAHUN) ORDER BY TAHUN,TRIWULAN";
 		$query = $this->db->query($sql);
 		$data = $query->result_array();
 		return $data;

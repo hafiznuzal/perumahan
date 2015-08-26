@@ -32,6 +32,13 @@ class Type_model extends CI_Model
         $sql = "update master_type set TYPE_NAME ='".$name."' where ID_TYPE=".$ID;
         $query = $this->db->query($sql);
     }
+    public function create_dummy($tahun,$triwulan,$jumlah)
+    {
+        $sql="INSERT INTO `pembangunan` ( `id_kombinasi`, `id_lokasi`, `id_perumahan`, `renc_rss`, `renc_rs`, `renc_rm`, `renc_mw`, `renc_ruko`, `real_rss`, `real_rs`, `real_rm`, `real_mw`, `real_ruko`, `catatan`, `tahun`, `triwulan`) VALUES(1, 10, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '-', $tahun, $triwulan)";
+        for ($i=0; $i < $jumlah; $i++) { 
+            $query = $this->db->query($sql);
+        }
+    }
 
 }
 

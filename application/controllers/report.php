@@ -132,6 +132,8 @@ class Report extends CI_Controller
 		
 		
 		$this->load->view('template/admin_header',$this->sesi);
+		
+		// $data['pembangunan'] =$this->m_report->tabel_pembangunan_kecamatan_pertahun_all($tahun);
 		$data['pembangunan'] = $this->proyek_model->get_data_pembangunan_periode($tahun);		
 		$this->load->view('admin/admin_report_pembangunan',$data);
 		$this->load->view('template/admin_footer');

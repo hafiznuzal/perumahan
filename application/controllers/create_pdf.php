@@ -876,7 +876,7 @@ public function rekapitulasi_lahan_kecamatan_pdf($tahun,$periode) {
           {
 
                 $data['lah_kec'][$j]= $this->m_report->tabel_lahan_kecamatan_all($j,$tahun,$periode);
-                $data['aktifpemb'][$j]= $this->m_report->aktif_dalam_pebangunan($j,$tahun,$periode);
+                $data['aktifpemb'][$j]= $this->m_report->aktif_dalam_pembangunan($j,$tahun,$periode);
                 $data['aktifber'][$j]= $this->m_report->aktif_berhenti($j,$tahun,$periode);
                 $data['aktifsel'][$j]= $this->m_report->aktif_sdh_selesai($j,$tahun,$periode);
                 $data['tdkaktif'][$j]= $this->m_report->tidak_aktif($j,$tahun,$periode);

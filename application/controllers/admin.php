@@ -36,7 +36,12 @@ class Admin extends CI_Controller
 
 		
 	}
-	
+	public function create_dummy($tahun,$triwulan,$jumlah)
+	{
+		$this->load->model('type_model');
+		$this->type_model->create_dummy($tahun,$triwulan,$jumlah);
+		echo "string";
+	}
 	public function index()
 	{
 		if($this->session->userdata('logged_in')){

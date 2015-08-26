@@ -173,7 +173,7 @@ $(document).ready(function(){
 	})
 
 	$('#pdfPemDownload').click(function(){
-		window.location="<?php echo site_url(); ?>create_pdf/report_pembangunan_perkecamatan_pdf/"+$('#kecamatanOpt').val()+"/"+$('#tahunOpt').val()+"/"+$('#periodeOpt').val();
+		window.location="<?php echo site_url(); ?>create_pdf/report_lahan_perkecamatan_pdf/"+$('#kecamatanOpt').val()+"/"+$('#tahunOpt').val()+"/"+$('#periodeOpt').val();
 	})
 	function changeDataPem()
 	{
