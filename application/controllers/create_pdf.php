@@ -86,8 +86,9 @@ class create_pdf extends CI_Controller {
       $pdf->Write(0, 'PEMBANGUNAN PERUMAHAN / PEMUKIMAN', '', 0, 'C', true, 0, false, false, 0);
       $pdf->Write(0, 'REKAPITULASI DATA PEMBANGUNAN RUMAH', '', 0, 'C', true, 0, false, false, 0);
       $pdf->SetFont('helvetica', '', 11);
-      $pdf->Write(0, 'Tahun :'  .$tahun, '', 0, 'L', true, 0, false, false, 0);
-      $pdf->Write(0, 'Periode : Triwulan' .$periode, '', 0, 'L', true, 0, false, false, 0);
+      $pdf->Write(0, 'Tahun         : '  .$tahun, '', 0, 'L', true, 0, false, false, 0);
+      $pdf->Write(0, 'Periode       : TRIWULAN ' .$periode, '', 0, 'L', true, 0, false, false, 0);
+
       //line
       $pdf->SetLineWidth(5);
       $pdf->SetDrawColor(0,128,255);
@@ -261,7 +262,7 @@ public function report_lahan_perkecamatan_pdf($id,$tahun,$periode) {
       $pdf->SetKeywords('TCPDF, PDF');
 
       // set default header data
-      $pdf->SetHeaderData('sidoardjo.png', 20, 'PEMERINTAH KABUPATEN SIDOARDJO', 'DINAS PEKERJAAN UMUM CIPTA KARYA DAN TATA RUANG' );
+      $pdf->SetHeaderData('sidoardjo.png', 20, 'PEMERINTAH KABUPATEN SIDOARDJO', 'DINAS PEKERJAAN UMUM CIPTA KARYA DAN TATA RUANG');
 
       // set header and footer fonts
       $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
@@ -296,10 +297,12 @@ public function report_lahan_perkecamatan_pdf($id,$tahun,$periode) {
       $pdf->Write(0, 'PEMBANGUNAN PERUMAHAN / PERMUKIMAN', '', 0, 'C', true, 0, false, false, 0);
       $pdf->Write(0, 'DATA LAHAN PERUMAHAN / PERMUKIMAN', '', 0, 'C', true, 0, false, false, 0);
       
+
       $pdf->SetFont('helvetica', '', 11);
-      $pdf->Write(0, 'Tahun :'  .$tahun, '', 0, 'L', true, 0, false, false, 0);
-      $pdf->Write(0, 'Periode : Triwulan' .$periode, '', 0, 'L', true, 0, false, false, 0);
-      $pdf->Write(0, 'Kecamatan :'  .$getkecamatan, '', 0, 'L', true, 0, false, false, 0);
+      $pdf->Write(0, 'Tahun         : '  .$tahun, '', 0, 'L', true, 0, false, false, 0);
+      $pdf->Write(0, 'Periode       : TRIWULAN ' .$periode, '', 0, 'L', true, 0, false, false, 0);
+      $pdf->Write(0, 'Kecamatan : '  .$getkecamatan, '', 0, 'L', true, 0, false, false, 0);
+      //$pdf->Write(0, PageNo () ,'', 0, 'L', true, 0, false, false, 0);
 
       $pdf->SetLineWidth(5);
       $pdf->SetDrawColor(0,128,255);
@@ -393,6 +396,7 @@ public function report_pembangunan_perkecamatan_pdf($id,$tahun,$periode) {
 
       // set default header data
       $pdf->SetHeaderData('sidoardjo.png', 20, 'PEMERINTAH KABUPATEN SIDOARDJO', 'DINAS PEKERJAAN UMUM CIPTA KARYA DAN TATA RUANG' );
+      //$pdf->SetHeaderData('', 20, ' KABUPATEN SIDOARDJO', 'DINAS PEKERJAAN UMUM CIPTA KARYA DAN TATA RUANG' );
 
       // set header and footer fonts
       $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
@@ -426,17 +430,19 @@ public function report_pembangunan_perkecamatan_pdf($id,$tahun,$periode) {
       $pdf->AddPage('L','A3');
       $pdf->Write(0, 'PEMBANGUNAN PERUMAHAN / PEMUKIMAN', '', 0, 'C', true, 0, false, false, 0);
       $pdf->Write(0, 'DATA PEMBANGUNAN RUMAH', '', 0, 'C', true, 0, false, false, 0);
-      
+      //$td = "&nbsp;"
       $pdf->SetFont('helvetica', '', 11);
-      $pdf->Write(0, 'Tahun :'  .$tahun, '', 0, 'L', true, 0, false, false, 0);
-      $pdf->Write(0, 'Periode : Triwulan' .$periode, '', 0, 'L', true, 0, false, false, 0);
-      $pdf->Write(0, 'Kecamatan :'  .$getkecamatan, '', 0, 'L', true, 0, false, false, 0);
+      $pdf->Write(0, 'Tahun         : '  .$tahun, '', 0, 'L', true, 0, false, false, 0);
+      $pdf->Write(0, 'Periode       : TRIWULAN ' .$periode, '', 0, 'L', true, 0, false, false, 0);
+      $pdf->Write(0, 'Kecamatan : '  .$getkecamatan, '', 0, 'L', true, 0, false, false, 0);
 
 
       $pdf->SetLineWidth(5);
       $pdf->SetDrawColor(0,128,255);
       $pdf->SetFillColor(255,255,128);
       // -----------------------------------------------------------------------------
+      // $html = '<head>HTML Example</h>';
+      // $pdf->writeHTML($html, true, false, false, false, '');
 
       // -----------------------------------------------------------------------------
       $tb="";
@@ -549,7 +555,7 @@ public function report_pembangunan_pdf($tahun) {
       $pdf->Write(0, 'REKAPITULASI DATA PEMBANGUNAN RUMAH', '', 0, 'C', true, 0, false, false, 0);
       
       $pdf->SetFont('helvetica', '', 11);
-      $pdf->Write(0, 'Tahun :'  .$tahun, '', 0, 'L', true, 0, false, false, 0);
+      $pdf->Write(0, 'Tahun         : '  .$tahun, '', 0, 'L', true, 0, false, false, 0);
       
       $pdf->SetLineWidth(5);
       $pdf->SetDrawColor(0,128,255);
@@ -669,7 +675,7 @@ EOD;
       $pdf->Write(0, 'REKAPITULASI DATA LAHAN PERUMAHAN / PEMUKIMAN', '', 0, 'C', true, 0, false, false, 0);
       
       $pdf->SetFont('helvetica', '', 11);
-      $pdf->Write(0, 'Tahun :'  .$tahun, '', 0, 'L', true, 0, false, false, 0);
+      $pdf->Write(0, 'Tahun         : '  .$tahun, '', 0, 'L', true, 0, false, false, 0);
 
       $pdf->SetLineWidth(5);
       $pdf->SetDrawColor(0,128,255);
@@ -847,8 +853,8 @@ public function rekapitulasi_lahan_kecamatan_pdf($tahun,$periode) {
       
       $pdf->SetFont('helvetica', '', 11);
      
-     $pdf->Write(0, 'Tahun :'  .$tahun, '', 0, 'L', true, 0, false, false, 0);
-      $pdf->Write(0, 'Periode : Triwulan' .$periode, '', 0, 'L', true, 0, false, false, 0);
+     $pdf->Write(0, 'Tahun         : '  .$tahun, '', 0, 'L', true, 0, false, false, 0);
+      $pdf->Write(0, 'Periode       : TRIWULAN ' .$periode, '', 0, 'L', true, 0, false, false, 0);
      
 
       $pdf->SetLineWidth(5);
