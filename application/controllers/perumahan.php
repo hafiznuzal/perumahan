@@ -6,10 +6,15 @@ class Perumahan extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->helper('url');
+
 		$this->load->model('perumahan_model');
 		$this->load->model('pembangunan_model');
 		$this->load->model('proyek_model');
 		$this->load->model('pembangunan_model');
+		$this->load->library('session');
+		if(!$this->session->userdata('logged_in')){
+			redirect(site_url()."login");
+		}
 		header("Access-Control-Allow-Origin: *");
 		//header("Content-Type: application/json; charset=UTF-8");
 	}

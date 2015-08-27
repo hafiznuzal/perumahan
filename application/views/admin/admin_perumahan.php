@@ -578,6 +578,10 @@
 							// $("#page_container").html(results);
 							var Action=	"<a class =\"edit_btn\" href=\"#\" id=\""+results+"\"><i class=\"fa fa-edit fa-2x\"></i></a>";
 							var detail ="<a class=\"btn btn-info\" href=\"<?php echo site_url(); ?>detil_proyek/index/"+results+"\">Detail</a>"
+							var rowNode = table.row.add([$("#addNamaPerumahan").val(),
+							$("#addNamaPengembang option:selected").text(),$("#addNamaLokasi option:selected").text(),Action,detail]).draw().node();
+							$(rowNode).css('color','red').animate({color:"black"});
+
 							$("#addSuccess").show();
 
 						}

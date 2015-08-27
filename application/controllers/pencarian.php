@@ -6,6 +6,10 @@ class Pencarian extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->helper('url');
+		$this->load->library('session');
+        if(!$this->session->userdata('logged_in')){
+          redirect(site_url()."login");
+        }
 	}
 	
 	public function get_all()

@@ -7,6 +7,10 @@ class Upload extends CI_Controller
 		parent::__construct();
 		$this->load->helper(array('form', 'url'));
 		$this->load->model('berkas_model');
+		$this->load->library('session');
+        if(!$this->session->userdata('logged_in')){
+          redirect(site_url()."login");
+        }
 
 	}
 	function do_upload($id_perumahan)

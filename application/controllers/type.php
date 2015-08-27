@@ -8,6 +8,10 @@ class Type extends CI_Controller
 			parent::__construct();
 			$this->load->helper('url');
 			$this->load->model('type_model');
+            $this->load->library('session');
+            if(!$this->session->userdata('logged_in')){
+              redirect(site_url()."login");
+            }
 
 	}
     
