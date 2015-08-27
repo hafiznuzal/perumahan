@@ -23,6 +23,8 @@
  * @author Nicola Asuni
  * @since 2009-03-20
  */
+
+
 class create_pdf extends CI_Controller {
  
     function __construct()
@@ -49,9 +51,12 @@ class create_pdf extends CI_Controller {
       $pdf->SetTitle('Rekapitulasi_Pembangunan_Perkecamatan_Triwulan'.$periode.'_'.$tahun);
       $pdf->SetSubject('TCPDF');
       $pdf->SetKeywords('TCPDF, PDF');
+      $pdf->SetHeaderData('sidoardjo.png', 20, 'PEMERINTAH KABUPATEN SIDOARDJO', 'DINAS PEKERJAAN UMUM CIPTA KARYA DAN TATA RUANG','REKAPITULASI DATA PEMBANGUNAN RUMAH' );
+      $pdf->setFooterData('Tahun '.$tahun);
+      $pdf->setBarcode(date('Y-m-d H:i:s'));
 
-      // set default header data
-      $pdf->SetHeaderData('sidoardjo.png', 20, 'PEMERINTAH KABUPATEN SIDOARDJO', 'DINAS PEKERJAAN UMUM CIPTA KARYA DAN TATA RUANG' );
+      // // set default header data
+      // $pdf->SetHeaderData('sidoardjo.png', 20, 'PEMERINTAH KABUPATEN SIDOARDJO', 'DINAS PEKERJAAN UMUM CIPTA KARYA DAN TATA RUANG' );
 
       // set header and footer fonts
       $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
@@ -83,11 +88,11 @@ class create_pdf extends CI_Controller {
       $pdf->SetFont('helvetica', 'B', 20);
       // add a page
       $pdf->AddPage('L','A3');
-      $pdf->Write(0, 'PEMBANGUNAN PERUMAHAN / PEMUKIMAN', '', 0, 'C', true, 0, false, false, 0);
-      $pdf->Write(0, 'REKAPITULASI DATA PEMBANGUNAN RUMAH', '', 0, 'C', true, 0, false, false, 0);
+      // $pdf->Write(0, 'PEMBANGUNAN PERUMAHAN / PEMUKIMAN', '', 0, 'C', true, 0, false, false, 0);
+      // $pdf->Write(0, 'REKAPITULASI DATA PEMBANGUNAN RUMAH', '', 0, 'C', true, 0, false, false, 0);
       $pdf->SetFont('helvetica', '', 11);
-      $pdf->Write(0, 'Tahun :'  .$tahun, '', 0, 'L', true, 0, false, false, 0);
-      $pdf->Write(0, 'Periode : Triwulan' .$periode, '', 0, 'L', true, 0, false, false, 0);
+      // $pdf->Write(0, 'Tahun :'  .$tahun, '', 0, 'L', true, 0, false, false, 0);
+      // $pdf->Write(0, 'Periode : Triwulan' .$periode, '', 0, 'L', true, 0, false, false, 0);
       //line
       $pdf->SetLineWidth(5);
       $pdf->SetDrawColor(0,128,255);
@@ -172,7 +177,7 @@ EOD;
           $data1= $this->m_report->tabel_pembangunan_kecamatan_all_statistic($tahun-1,$periode);
           $data2= $this->m_report->tabel_pembangunan_kecamatan_all_statistic($tahun-2,$periode);
           $k=1;
-          foreach ($data1 as $i){  
+          foreach ($data2 as $i){  
               
                 $tb .= 
                     "<tr>  
@@ -189,7 +194,7 @@ EOD;
                   <br>".$i['RENC_MW']."
                   <br>".$i['RENC_RUKO']."
                   </td>" ;}
-          foreach ($data2 as $i){
+          foreach ($data1 as $i){
                   $tb .="
                   <td width=\"106px\">".$i['RENC_RSS']."
                   <br>".$i['RENC_RS']."
@@ -197,7 +202,7 @@ EOD;
                   <br>".$i['RENC_MW']."
                   <br>".$i['RENC_RUKO']."
                   </td>";}
-          foreach ($data1 as $i){  
+          foreach ($data2 as $i){  
                    $tb .="
                   <td width=\"106px\">".$i['REAL_RSS']."
                   <br>".$i['REAL_RS']."
@@ -205,7 +210,7 @@ EOD;
                   <br>".$i['REAL_MW']."
                   <br>".$i['REAL_RUKO']."
                   </td>";}
-          foreach ($data2 as $i){
+          foreach ($data1 as $i){
                   $tb .="
                   <td width=\"106px\">".$i['REAL_RSS']."
                   <br>".$i['REAL_RS']."
@@ -216,17 +221,18 @@ EOD;
                 </tr> ";
                 
                 }
-
+      $th1=$tahun-1;
+      $th2=$tahun-2;
       $tbl = <<<EOD
       <table border="1" cellpadding="2" cellspacing="2">
       <thead>
        <tr style="background-color:#FFFF00;color:#0000FF;">
         
         <td width="320px" align="center"><b>TYPE RUMAH</b></td>
-        <td width="106px " align="center"> <b>(Rencana)<br> 2 Tahun Sebelum</b></td>     
-        <td width="106px " align="center"> <b>(Rencana)<br> 1 Tahun Sebelum</b></td>
-        <td width="106px " align="center"> <b>(Realisasi)<br> 2 Tahun Sebelum</b></td>     
-        <td width="106px " align="center"> <b>(Realisasi)<br> 1 Tahun Sebelum</b></td>
+        <td width="106px " align="center"> <b>(Rencana)<br>$th2</b></td>     
+        <td width="106px " align="center"> <b>(Rencana)<br>$th1</b></td>
+        <td width="106px " align="center"> <b>(Realisasi)<br>$th2</b></td>     
+        <td width="106px " align="center"> <b>(Realisasi)<br>$th1</b></td>
        </tr>
       </thead>
        $tb $tb1
@@ -261,8 +267,9 @@ public function report_lahan_perkecamatan_pdf($id,$tahun,$periode) {
       $pdf->SetKeywords('TCPDF, PDF');
 
       // set default header data
-      $pdf->SetHeaderData('sidoardjo.png', 20, 'PEMERINTAH KABUPATEN SIDOARDJO', 'DINAS PEKERJAAN UMUM CIPTA KARYA DAN TATA RUANG' );
-
+      $pdf->SetHeaderData('sidoardjo.png', 20, 'PEMERINTAH KABUPATEN SIDOARDJO', 'DINAS PEKERJAAN UMUM CIPTA KARYA DAN TATA RUANG','DATA LAHAN PERUMAHAN / PERMUKIMAN ('.$getkecamatan.")" );
+      $pdf->setFooterData('Triwulan '.$periode.' Tahun '.$tahun);
+      $pdf->setBarcode(date('Y-m-d H:i:s'));
       // set header and footer fonts
       $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
       $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
@@ -293,13 +300,13 @@ public function report_lahan_perkecamatan_pdf($id,$tahun,$periode) {
       $pdf->SetFont('helvetica', 'B', 20);
       // add a page
       $pdf->AddPage('L','A3');
-      $pdf->Write(0, 'PEMBANGUNAN PERUMAHAN / PERMUKIMAN', '', 0, 'C', true, 0, false, false, 0);
-      $pdf->Write(0, 'DATA LAHAN PERUMAHAN / PERMUKIMAN', '', 0, 'C', true, 0, false, false, 0);
+      // $pdf->Write(0, 'PEMBANGUNAN PERUMAHAN / PERMUKIMAN', '', 0, 'C', true, 0, false, false, 0);
+      // $pdf->Write(0, 'DATA LAHAN PERUMAHAN / PERMUKIMAN', '', 0, 'C', true, 0, false, false, 0);
       
       $pdf->SetFont('helvetica', '', 11);
-      $pdf->Write(0, 'Tahun :'  .$tahun, '', 0, 'L', true, 0, false, false, 0);
-      $pdf->Write(0, 'Periode : Triwulan' .$periode, '', 0, 'L', true, 0, false, false, 0);
-      $pdf->Write(0, 'Kecamatan :'  .$getkecamatan, '', 0, 'L', true, 0, false, false, 0);
+      // $pdf->Write(0, 'Tahun :'  .$tahun, '', 0, 'L', true, 0, false, false, 0);
+      // $pdf->Write(0, 'Periode : Triwulan' .$periode, '', 0, 'L', true, 0, false, false, 0);
+      // $pdf->Write(0, 'Kecamatan :'  .$getkecamatan, '', 0, 'L', true, 0, false, false, 0);
 
       $pdf->SetLineWidth(5);
       $pdf->SetDrawColor(0,128,255);
@@ -377,6 +384,7 @@ EOD;
 public function report_pembangunan_perkecamatan_pdf($id,$tahun,$periode) {
 
       /// create new PDF document
+
       $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
        $this->load->model('m_report');
        $datakec= $this->m_report->get_kecamatan($id);
@@ -391,9 +399,10 @@ public function report_pembangunan_perkecamatan_pdf($id,$tahun,$periode) {
       $pdf->SetSubject('TCPDF');
       $pdf->SetKeywords('TCPDF, PDF');
 
-      // set default header data
-      $pdf->SetHeaderData('sidoardjo.png', 20, 'PEMERINTAH KABUPATEN SIDOARDJO', 'DINAS PEKERJAAN UMUM CIPTA KARYA DAN TATA RUANG' );
 
+      $pdf->SetHeaderData('sidoardjo.png', 20, 'PEMERINTAH KABUPATEN SIDOARDJO', 'DINAS PEKERJAAN UMUM CIPTA KARYA DAN TATA RUANG','DATA PEMBANGUNAN RUMAH ('.$getkecamatan.")" );
+      $pdf->setFooterData('Triwulan '.$periode.' Tahun '.$tahun);
+      $pdf->setBarcode(date('Y-m-d H:i:s'));
       // set header and footer fonts
       $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
       $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
@@ -424,13 +433,13 @@ public function report_pembangunan_perkecamatan_pdf($id,$tahun,$periode) {
       $pdf->SetFont('helvetica', 'B', 20);
       // add a page
       $pdf->AddPage('L','A3');
-      $pdf->Write(0, 'PEMBANGUNAN PERUMAHAN / PEMUKIMAN', '', 0, 'C', true, 0, false, false, 0);
-      $pdf->Write(0, 'DATA PEMBANGUNAN RUMAH', '', 0, 'C', true, 0, false, false, 0);
+      // $pdf->Write(0, 'PEMBANGUNAN PERUMAHAN / PEMUKIMAN', '', 0, 'C', true, 0, false, false, 0);
+      // $pdf->Write(0, 'DATA PEMBANGUNAN RUMAH', '', 0, 'C', true, 0, false, false, 0);
       
       $pdf->SetFont('helvetica', '', 11);
-      $pdf->Write(0, 'Tahun :'  .$tahun, '', 0, 'L', true, 0, false, false, 0);
-      $pdf->Write(0, 'Periode : Triwulan' .$periode, '', 0, 'L', true, 0, false, false, 0);
-      $pdf->Write(0, 'Kecamatan :'  .$getkecamatan, '', 0, 'L', true, 0, false, false, 0);
+      // $pdf->Write(0, 'Tahun :'  .$tahun, '', 0, 'L', true, 0, false, false, 0);
+      // $pdf->Write(0, 'Periode : Triwulan' .$periode, '', 0, 'L', true, 0, false, false, 0);
+      // $pdf->Write(0, 'Kecamatan :'  .$getkecamatan, '', 0, 'L', true, 0, false, false, 0);
 
 
       $pdf->SetLineWidth(5);
@@ -512,9 +521,9 @@ public function report_pembangunan_pdf($tahun) {
       $pdf->SetSubject('TCPDF');
       $pdf->SetKeywords('TCPDF, PDF');
 
-      // set default header data
-      $pdf->SetHeaderData('sidoardjo.png', 20, 'PEMERINTAH KABUPATEN SIDOARDJO', 'DINAS PEKERJAAN UMUM CIPTA KARYA DAN TATA RUANG' );
-
+      $pdf->SetHeaderData('sidoardjo.png', 20, 'PEMERINTAH KABUPATEN SIDOARDJO', 'DINAS PEKERJAAN UMUM CIPTA KARYA DAN TATA RUANG','REKAPITULASI DATA PEMBANGUNAN RUMAH' );
+      $pdf->setFooterData(' Tahun '.$tahun);
+      $pdf->setBarcode(date('Y-m-d H:i:s'));
       // set header and footer fonts
       $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
       $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
@@ -545,11 +554,11 @@ public function report_pembangunan_pdf($tahun) {
       $pdf->SetFont('helvetica', 'B', 20);
       // add a page
       $pdf->AddPage('L','A3');
-      $pdf->Write(0, 'PEMBANGUNAN PERUMAHAN / PEMUKIMAN', '', 0, 'C', true, 0, false, false, 0);
-      $pdf->Write(0, 'REKAPITULASI DATA PEMBANGUNAN RUMAH', '', 0, 'C', true, 0, false, false, 0);
+      // $pdf->Write(0, 'PEMBANGUNAN PERUMAHAN / PEMUKIMAN', '', 0, 'C', true, 0, false, false, 0);
+      // $pdf->Write(0, 'REKAPITULASI DATA PEMBANGUNAN RUMAH', '', 0, 'C', true, 0, false, false, 0);
       
       $pdf->SetFont('helvetica', '', 11);
-      $pdf->Write(0, 'Tahun :'  .$tahun, '', 0, 'L', true, 0, false, false, 0);
+      // $pdf->Write(0, 'Tahun :'  .$tahun, '', 0, 'L', true, 0, false, false, 0);
       
       $pdf->SetLineWidth(5);
       $pdf->SetDrawColor(0,128,255);
@@ -633,8 +642,9 @@ EOD;
       $pdf->SetKeywords('TCPDF, PDF');
 
       // set default header data
-      $pdf->SetHeaderData('sidoardjo.png', 20, 'PEMERINTAH KABUPATEN SIDOARDJO', 'DINAS PEKERJAAN UMUM CIPTA KARYA DAN TATA RUANG' );
-
+      $pdf->SetHeaderData('sidoardjo.png', 20, 'PEMERINTAH KABUPATEN SIDOARDJO', 'DINAS PEKERJAAN UMUM CIPTA KARYA DAN TATA RUANG','REKAPITULASI DATA LAHAN PERUMAHAN / PEMUKIMAN' );
+      $pdf->setFooterData('Tahun '.$tahun);
+      $pdf->setBarcode(date('Y-m-d H:i:s'));
       // set header and footer fonts
       $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
       $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
@@ -665,11 +675,11 @@ EOD;
       $pdf->SetFont('helvetica', 'B', 20);
       // add a page
       $pdf->AddPage('L','A3');
-       $pdf->Write(0, 'PEMBANGUNAN PERUMAHAN / PEMUKIMAN', '', 0, 'C', true, 0, false, false, 0);
-      $pdf->Write(0, 'REKAPITULASI DATA LAHAN PERUMAHAN / PEMUKIMAN', '', 0, 'C', true, 0, false, false, 0);
+      // $pdf->Write(0, 'PEMBANGUNAN PERUMAHAN / PEMUKIMAN', '', 0, 'C', true, 0, false, false, 0);
+      // $pdf->Write(0, 'REKAPITULASI DATA LAHAN PERUMAHAN / PEMUKIMAN', '', 0, 'C', true, 0, false, false, 0);
       
       $pdf->SetFont('helvetica', '', 11);
-      $pdf->Write(0, 'Tahun :'  .$tahun, '', 0, 'L', true, 0, false, false, 0);
+      // $pdf->Write(0, 'Tahun :'  .$tahun, '', 0, 'L', true, 0, false, false, 0);
 
       $pdf->SetLineWidth(5);
       $pdf->SetDrawColor(0,128,255);
@@ -809,9 +819,9 @@ public function rekapitulasi_lahan_kecamatan_pdf($tahun,$periode) {
       $pdf->SetSubject('TCPDF');
       $pdf->SetKeywords('TCPDF, PDF');
 
-      // set default header data
-      $pdf->SetHeaderData('sidoardjo.png', 20, 'PEMERINTAH KABUPATEN SIDOARDJO', 'DINAS PEKERJAAN UMUM CIPTA KARYA DAN TATA RUANG' );
-
+      $pdf->SetHeaderData('sidoardjo.png', 20, 'PEMERINTAH KABUPATEN SIDOARDJO', 'DINAS PEKERJAAN UMUM CIPTA KARYA DAN TATA RUANG','REKAPITULASI DATA LAHAN PERUMAHAH / PEMUKIMAN' );
+      $pdf->setFooterData('Triwulan '.$periode.' Tahun '.$tahun);
+      $pdf->setBarcode(date('Y-m-d H:i:s'));
       // set header and footer fonts
       $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
       $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
@@ -842,13 +852,13 @@ public function rekapitulasi_lahan_kecamatan_pdf($tahun,$periode) {
       $pdf->SetFont('helvetica', 'B', 20);
       // add a page
       $pdf->AddPage('L','A3');
-      $pdf->Write(0, 'PEMBANGUNAN PERUMAHAN / PEMUKIMAN', '', 0, 'C', true, 0, false, false, 0);
-      $pdf->Write(0, 'REKAPITULASI DATA LAHAN PERUMAHAH / PEMUKIMAN', '', 0, 'C', true, 0, false, false, 0);
+     //  $pdf->Write(0, 'PEMBANGUNAN PERUMAHAN / PEMUKIMAN', '', 0, 'C', true, 0, false, false, 0);
+     //  $pdf->Write(0, 'REKAPITULASI DATA LAHAN PERUMAHAH / PEMUKIMAN', '', 0, 'C', true, 0, false, false, 0);
       
       $pdf->SetFont('helvetica', '', 11);
      
-     $pdf->Write(0, 'Tahun :'  .$tahun, '', 0, 'L', true, 0, false, false, 0);
-      $pdf->Write(0, 'Periode : Triwulan' .$periode, '', 0, 'L', true, 0, false, false, 0);
+     // $pdf->Write(0, 'Tahun :'  .$tahun, '', 0, 'L', true, 0, false, false, 0);
+     //  $pdf->Write(0, 'Periode : Triwulan' .$periode, '', 0, 'L', true, 0, false, false, 0);
      
 
       $pdf->SetLineWidth(5);
@@ -983,9 +993,10 @@ $pdf->writeHTML($tbl, true, false, false, false, '');
 $tb="";
           $tb1="";
           $this->load->model('m_report');
-          $data= $this->m_report->tabel_lahan_kecamatan_all_statistic($tahun,$periode);
+          $data1 = $this->m_report->tabel_lahan_kecamatan_all_statistic($tahun-1,$periode);
+          $data2 = $this->m_report->tabel_lahan_kecamatan_all_statistic($tahun-2,$periode);
           
-          foreach ($data as $i){  
+          foreach ($data2 as $i){  
               
                 $tb .= 
                     "<tr>  
@@ -1005,8 +1016,9 @@ $tb="";
                   <br>".$i['PEMBEBASAN']."
                   <br>".$i['TERBANGUN']."
                   <br>".$i['BELUM_TERBANGUN']."
-                  </td>
-                  <td width=\"200px\">".$i['JML_PENGEMBANG']."
+                  </td>";}
+          foreach ($data1 as $i){     
+                  $tb.="<td width=\"200px\">".$i['JML_PENGEMBANG']."
                   <br>".$i['JML_IJIN_LOKASI']."
                   <br>".$i['LUAS']."
                   <br>".$i['RENCANA_TAPAK']."
@@ -1015,17 +1027,19 @@ $tb="";
                   <br>".$i['BELUM_TERBANGUN']."
                   </td>      
                 </tr> ";
+              }
                 
-                }
-
+                
+      $th1=$tahun-1;
+      $th2=$tahun-2;
       $tbl = <<<EOD
       <table border="1" cellpadding="2" cellspacing="2">
       <thead>
        <tr style="background-color:#FFFF00;color:#0000FF;">
         
         <td width="320px" align="center"><b>TYPE RUMAH</b></td>
-        <td width="200px " align="center"> <b>2 Tahun Sebelum</b></td>     
-        <td width="200px " align="center"> <b>1 Tahun Sebelum</b></td>
+        <td width="200px " align="center"> <b>$th2</b></td>     
+        <td width="200px " align="center"> <b>$th1</b></td>
        </tr>
       </thead>
        $tb $tb1

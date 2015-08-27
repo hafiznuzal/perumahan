@@ -648,6 +648,8 @@ class TCPDF {
 	 */
 	protected $header_title = '';
 
+	protected $header_text = '';
+
 	/**
 	 * String to pring on page header after title.
 	 * @protected
@@ -674,6 +676,7 @@ class TCPDF {
 	 * @protected
 	 */
 	protected $footer_text_color = array(0,0,0);
+	protected $footer_text;
 
 	/**
 	 * Color for footer line (RGB array).
@@ -3254,13 +3257,14 @@ class TCPDF {
 	 * @param $lc (array) RGB array color for line.
 	 * @public
 	 */
-	public function setHeaderData($ln='', $lw=0, $ht='', $hs='', $tc=array(0,0,0), $lc=array(0,0,0)) {
+	public function setHeaderData($ln='', $lw=0, $ht='', $hs='',$text='', $tc=array(0,0,0), $lc=array(0,0,0)) {
 		$this->header_logo = $ln;
 		$this->header_logo_width = $lw;
 		$this->header_title = $ht;
 		$this->header_string = $hs;
 		$this->header_text_color = $tc;
 		$this->header_line_color = $lc;
+		$this->header_text = $text;
 	}
 
 	/**
@@ -3269,9 +3273,10 @@ class TCPDF {
 	 * @param $lc (array) RGB array color for line.
 	 * @public
 	 */
-	public function setFooterData($tc=array(0,0,0), $lc=array(0,0,0)) {
+	public function setFooterData($text='',$tc=array(0,0,0), $lc=array(0,0,0)) {
 		$this->footer_text_color = $tc;
 		$this->footer_line_color = $lc;
+		$this->footer_text = $text;
 	}
 
 	/**
@@ -3289,6 +3294,7 @@ class TCPDF {
 		$ret['string'] = $this->header_string;
 		$ret['text_color'] = $this->header_text_color;
 		$ret['line_color'] = $this->header_line_color;
+		$ret['text'] = $this->header_text;
 		return $ret;
 	}
 
@@ -3427,11 +3433,19 @@ class TCPDF {
 			$this->SetFont($headerfont[0], 'B', $headerfont[2] + 1);
 			$this->SetX($header_x);
 			$this->Cell($cw, $cell_height, $headerdata['title'], 0, 1, '', 0, '', 0);
+
+			
+
 			// header string
+		
 			$this->SetFont($headerfont[0], $headerfont[1], $headerfont[2]);
 			$this->SetX($header_x);
 			$this->MultiCell($cw, $cell_height, $headerdata['string'], 0, '', 0, 1, '', '', true, 0, false, true, 0, 'T', false);
 			// print an ending header line
+			$this->SetFont('helvetica', 'B', 20);
+			// Title
+			$this->SetY(20);
+			$this->Cell(0, 15, $headerdata['text'], 0, false, 'C', 0, '', 0, false, 'M', 'M');
 			$this->SetLineStyle(array('width' => 0.85 / $this->k, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => $headerdata['line_color']));
 			$this->SetY((2.835 / $this->k) + max($imgy, $this->y));
 			if ($this->rtl) {
@@ -3459,6 +3473,8 @@ class TCPDF {
 			// reset header xobject template at each page
 			$this->header_xobjid = false;
 		}
+
+
 	}
 
 	/**
@@ -3504,6 +3520,9 @@ class TCPDF {
 			$this->Cell(0, 0, $pagenumtxt, 'T', 0, 'L');
 		} else {
 			$this->SetX($this->original_lMargin);
+			$footerdata = $this->footer_text;
+			$this->SetFont('helvetica', 'B', 10);
+			$this->Cell(0, 0, $footerdata, 0, 1, 'C', 0, '', 0);
 			$this->Cell(0, 0, $this->getAliasRightShift().$pagenumtxt, 'T', 0, 'R');
 		}
 	}
