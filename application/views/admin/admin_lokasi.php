@@ -91,11 +91,11 @@
 							?>
 						</select>
 						<label>Pilih Lokasi</label>
-						<div id="mapedit" style="height:300px !important"></div>
-						<label >Latitude :</label>
-						<p id="latitudeedit">Klik pada peta untuk menentukan lokasi</p>
-						 <label >Longitude :</label>
-						<p id="longitudeedit">Klik pada peta untuk menentukan lokasi</p>
+						</div><div id="mapedit" style="height:300px !important"></div>
+						
+						<p style="display:none" id="latitudeedit">Klik pada peta untuk menentukan lokasi</p>
+						 
+						<p style="display:none" id="longitudeedit">Klik pada peta untuk menentukan lokasi</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
@@ -105,7 +105,7 @@
 			</div>
 		 </div>
 	</div>
-</div>
+
 
 <div class="modal fade " id="AddModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
 		<div class="modal-dialog">
@@ -142,7 +142,6 @@
 		 </div>
 	</div>
 </div>
-
 		<script>             
 
 			$(document).ready(function () {
@@ -157,19 +156,21 @@
 					var coord = e.latlng;
 					$("#latitudeadd").html(coord.lat);
 					$("#longitudeadd").html(coord.lng);
+					addmarker.setLatLng(e.latlng)
 				});
-
-				var mapedit = L.map('mapedit').setView([-7.275862, 112.791744], 13);
+				var addmarker = L.marker([0,0]).addTo(mapadd);
+				var mapedit = L.map('mapedit').setView([-7.275862, 112.791744], 15);
 				L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 					attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
 					maxZoom: 18
 				}).addTo(mapedit);
-
+				var editmarker = L.marker([0,0]).addTo(mapedit);
 
 				mapedit.on('click', function(e) {
 					var coord = e.latlng;
 					$("#latitudeedit").html(coord.lat);
 					$("#longitudeedit").html(coord.lng);
+					editmarker.setLatLng(e.latlng)
 				});
 
 				$("#delSuccess").hide();
@@ -183,16 +184,24 @@
 					$('#editIdLokasi').val($(this).attr("id"));
 					$("#editIdkecamatan").val($(this).attr("id-kecamatan"));
 					$('#EditModal').modal('show');
-					$("#latitudeedit").html($(this).parent().prev().prev().attr("longitude"));
-					$("#longitudeedit").html($(this).parent().prev().prev().attr("latitude"));
-					mapedit.setView([$("#latitudeedit").text(), $("#longitudeedit").text()]);
+					$("#latitudeedit").text($(this).parent().prev().prev().attr("longitude"));
+					$("#longitudeedit").text($(this).parent().prev().prev().attr("latitude"));
+					editmarker.closePopup();
+					editmarker.setLatLng([$("#latitudeedit").text(), $("#longitudeedit").text()]).bindPopup(name).update()
+					
+					mapedit.panTo(new L.LatLng($("#latitudeedit").text(), $("#longitudeedit").text()));
+					
 				});
 				$('.add_btn').click(function(e) {
 					e.preventDefault();
 					$('#editLokasi').val('');
 					$('#AddModal').modal('show');
 				});
-
+				$('#EditModal').on('show.bs.modal', function(){
+				  setTimeout(function() {
+				    mapedit.invalidateSize();
+				  }, 10);
+				 });
 				$("#saveAdd").click(function(e){
 					var data= {
 						"nama_lokasi": $('#addLokasi').val(),
