@@ -20,6 +20,7 @@ class Report extends CI_Controller
 			$session_data=$this->session->userdata('logged_in');
 			$this->sesi['tahun']=$session_data['tahun'];
 			$this->sesi['bulan']=$session_data['periode'];
+			$this->sesi['hak'] = $session_data['hak'];
 			
 		}
 		else{
