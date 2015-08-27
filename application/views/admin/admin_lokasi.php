@@ -129,10 +129,10 @@
 						</select>
 						<label>Pilih Lokasi</label>
 						<div id="mapadd" style="height:300px !important"></div>
-						<label >Latitude :</label>
-						<p id="latitudeadd">Klik pada peta untuk menentukan lokasi</p>
-						 <label >Longitude :</label>
-						<p id="longitudeadd">Klik pada peta untuk menentukan lokasi</p>
+					
+						<p style="display:none" id="latitudeadd">Klik pada peta untuk menentukan lokasi</p>
+	
+						<p style="display:none" id="longitudeadd">Klik pada peta untuk menentukan lokasi</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
