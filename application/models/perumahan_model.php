@@ -30,7 +30,7 @@ class Perumahan_model extends CI_Model
 		$session_data=$this->session->userdata('logged_in');
 		$tahun=$session_data['tahun'];
 		$periode=$session_data['periode'];
-		$sql = "SELECT pr.id_perumahan, pr.nama_perumahan, ps.nama_perusahaan, GROUP_CONCAT(DISTINCT l.nama_lokasi separator ',\n') nama_lokasi
+		$sql = "SELECT pr.id_perumahan, pr.nama_perumahan,ps.id_perusahaan, ps.nama_perusahaan, GROUP_CONCAT(DISTINCT l.nama_lokasi separator ',\n') nama_lokasi
 				FROM perusahaan ps, perumahan pr, lokasi l, ijin i, kombinasi ko,pembangunan pem
 				WHERE l.id_lokasi=ko.id_lokasi
 				AND ko.id_kombinasi=i.id_kombinasi
@@ -113,9 +113,9 @@ class Perumahan_model extends CI_Model
 		$this->db->insert("ijin", $datas);
 	}
 
-	public function edit($ID,$name)
+	public function edit($ID,$name,$pengembang)
 	{
-		$sql = "UPDATE perumahan SET nama_perumahan='" . $name . "' WHERE id_perumahan=$ID";
+		$sql = "UPDATE perumahan SET nama_perumahan='" . $name . "',id_perusahaan='".$pengembang."' WHERE id_perumahan=$ID";
 		$query = $this->db->query($sql);
 	}
 

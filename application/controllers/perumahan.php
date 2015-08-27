@@ -102,15 +102,18 @@ class Perumahan extends CI_Controller
 			$this->pembangunan_model->add($id_perumahan,$id_kombinasi,$id_lokasi,$renc_rss,$renc_rs,$renc_rm,$renc_mw,$renc_ruko,$real_rss,$real_rs,$real_rm,$real_mw,$real_ruko,$catatan,$tahun,$periode);			
 		}
 		else $this->pembangunan_model->add($id_perumahan,$id_kombinasi,$lokasi,"","","","","","","","","","","",$tahun,$periode);			
-		$this->get_all();
+		// $this->get_all();
+		echo json_encode($id_perumahan);
 	}
 
 	public function edit()
 	{
 		$ID = $_GET['id'];
 		$name = $_GET['nama_perumahan'];
-		$this->perumahan_model->edit($ID,$name);
-		$this->get_all();
+		$pengembang = $_GET['pengembang'];
+		$this->perumahan_model->edit($ID,$name,$pengembang);
+		// $this->get_all();
+		echo json_encode(1);
 	}
 
 	public function delete()

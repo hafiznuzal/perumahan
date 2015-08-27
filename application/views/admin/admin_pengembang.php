@@ -271,7 +271,7 @@
 					},
 					dataType: 'html',
 					success: function(results) {
-						console.log(JSON.stringify(results));
+						// console.log(JSON.stringify(results));
 						//$("#page_container").html(results);
 						var Action=	"<a class =\"edit_btn\" href=\"#\" id=\""+$('#idEditPerusahaan').val()+"\"><i class=\"fa fa-edit fa-2x\"></i></a><a class =\"del_btn\" href=\"#\" id=\""+$('#idEditPerusahaan').val()+"\"><i class=\"fa fa-trash fa-2x\"></i></a>";
 						row.fadeOut('fast',function(){$(this).remove();});

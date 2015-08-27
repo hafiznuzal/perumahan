@@ -44,7 +44,7 @@
 										<?php foreach ($daftar_perumahan as $i) {?>
 										<tr class="odd gradeX">
 											<td><?php echo $i['nama_perumahan']?></td>
-											<td><?php echo $i['nama_perusahaan']?></td>
+											<td id="<?php echo $i['id_perusahaan']?>"><?php echo $i['nama_perusahaan']?></td>
 											<td><?php echo $i['nama_lokasi']?></td>
 											<td>
 												<a class ="edit_btn" href="#" id="<?php echo $i['id_perumahan']?>"><i class="fa fa-edit fa-2x"></i></a>
@@ -82,10 +82,18 @@
 				<div class="modal-body">
 					<div class="form-group">
 						<input type="hidden" id="perumahanID" />
+						<input type="hidden" id="perumahanLokasi" />
 						<label >Nama Perumahan :</label>
 						<input type="text" class="form-control" id="editNamaPerumahan">
 						<label >Nama Pengembang :</label>
-						<input type="text" class="form-control" id="editNamaPengembang">
+						<select class="form-control" id="editNamaPengembang">
+							<?php
+								foreach ($daftar_pengembang as $pengembang)
+								{
+									echo "<option value='". $pengembang['id_perusahaan']. "'>" . $pengembang['nama_perusahaan'] . "</option>";
+								}
+							?>
+						</select>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
@@ -106,6 +114,8 @@
 				</div>
 			<div class="modal-body">
 				<!-- <div class="row"> -->
+					<input type="hidden" id="idEditPerumahan"/>
+					<input type="hidden" id="idPerumahan"/>
 					<div class="form-group">
 						<label >Nama Perumahan :</label>
 						<input type="text" class="form-control" id="addNamaPerumahan">
@@ -233,6 +243,7 @@
 	
 	<script>
 		$(document).ready(function () {
+			var row;
 			$("#delSuccess").hide();
 			$("#addSuccess").hide();
 			$("#editSuccess").hide();
@@ -279,7 +290,7 @@
 				var htmlPerumahan= '<option disabled selected>Perumahan</option>';
 				var tahun="<?php echo $this->session->userdata('logged_in')['tahun']; ?>";
 				
-				for (var i =tahun-5;i<tahun;i++) {
+				for (var i =tahun-5;i<=tahun;i++) {
 				    htmlTahun += '<option value="' + i + '">' + i + '</option>';
 				} 
 				for(var i=1;i<5;i++)
@@ -477,7 +488,7 @@
 					},
 					dataType: 'html',
 					success: function(results) {
-						console.log(JSON.stringify(results));
+						// console.log(JSON.stringify(results));
 						$("#page_container").html(results);
 						$("#delSuccess").show();
 					}
@@ -494,13 +505,22 @@
 			$("#dataTable").on("click", ".edit_btn", function(e) {
 				e.preventDefault();
 				var name = $(this).parent().prev().prev().prev().html();
+				var lokasi = $(this).parent().prev().html();
 				var id = $(this).attr('id');
 				var pengembang = $(this).parent().prev().prev().html();
+				var pengembangID = $(this).parent().prev().prev().attr('id');
+				
+				console.log(pengembangID)
+				row=$(this).parent().parent();
+				
 
+				$('#idEditPerumahan').val(id);
 				$('#editNamaPerumahan').val(name);
 				$('#editNamaPengembang').val(pengembang);
 				$('#perumahanID').val(id);
+				$('#perumahanLokasi').val(lokasi);
 				$('#EditModal').modal('show');
+				$('#editNamaPengembang').val(pengembangID);
 			});
 
 			$("#saveAdd").click(function(e){
@@ -508,7 +528,7 @@
 				// var id_lokasis = "";
 				// for (var i = 0; i < temp.length; i++) id_lokasis += ($(temp[i]).attr("id") + " ");
 				// id_lokasis = id_lokasis.slice(0, -1);
-
+				var table=$('#dataTable').DataTable();
 				if($('#tahunOpt').val()!=null && $('#periodeOpt').val()!=null && $('#perumahanOpt').val()!=null)
 				{
 					var datas = {
@@ -552,11 +572,14 @@
 						url: '<?php echo site_url(); ?>perumahan/add/?mode=import',
 						type: 'GET',
 						data: datas,
-						dataType: 'html',
+						dataType: 'json',
 						success: function(results){
 							$("#AddModal").modal('hide');
-							$("#page_container").html(results);
+							// $("#page_container").html(results);
+							var Action=	"<a class =\"edit_btn\" href=\"#\" id=\""+results+"\"><i class=\"fa fa-edit fa-2x\"></i></a>";
+							var detail ="<a class=\"btn btn-info\" href=\"<?php echo site_url(); ?>detil_proyek/index/"+results+"\">Detail</a>"
 							$("#addSuccess").show();
+
 						}
 					});		
 				}
@@ -586,10 +609,17 @@
 						url: '<?php echo site_url(); ?>perumahan/add/',
 						type: 'GET',
 						data: datas,
-						dataType: 'html',
+						dataType: 'json',
 						success: function(results){
 							$("#AddModal").modal('hide');
-							$("#page_container").html(results);
+							// $("#page_container").html(results);
+							
+							var Action=	"<a class =\"edit_btn\" href=\"#\" id=\""+results+"\"><i class=\"fa fa-edit fa-2x\"></i></a>";
+							var detail ="<a class=\"btn btn-info\" href=\"<?php echo site_url(); ?>detil_proyek/index/"+results+"\">Detail</a>"
+							var rowNode = table.row.add([$("#addNamaPerumahan").val(),
+							$("#addNamaPengembang option:selected").text(),$("#addNamaLokasi option:selected").text(),Action,detail]).draw().node();
+							$(rowNode).css('color','red').animate({color:"black"});
+
 							$("#addSuccess").show();
 						}
 					});	
@@ -598,20 +628,32 @@
 			});
 				
 			$('#saveEdit').click(function(e) {
-				e.preventDefault();
+				// e.preventDefault();
+				console.log($('#editNamaPengembang').val())
+				var table=$('#dataTable').DataTable();
 				$.ajax({
 					url: '<?php echo site_url()?>perumahan/edit/',
 					type:'GET',
 					data: {
 						"id": $('#perumahanID').val(),
-						"nama_perumahan": $("#editNamaPerumahan").val()
+						"nama_perumahan": $("#editNamaPerumahan").val(),
+						"pengembang" :$("#editNamaPengembang").val()
 					},
 					dataType: 'html',
 					success: function(results) {
-						console.log(JSON.stringify(results));
-						$('#EditModal').modal('hide');
-						$("#page_container").html(results);
+						// console.log(JSON.stringify(results));
+						// $('#EditModal').modal('hide');
+						// $("#page_container").html(results);
+						// refresh()
+						// $("#editSuccess").show();
+						var Action=	"<a class =\"edit_btn\" href=\"#\" id=\""+$('#idEditPerumahan').val()+"\"><i class=\"fa fa-edit fa-2x\"></i></a>";
+						var detail ="<a class=\"btn btn-info\" href=\"<?php echo site_url(); ?>detil_proyek/index/"+$('#idEditPerumahan').val()+"\">Detail</a>"
+						row.fadeOut('fast',function(){$(this).remove();});
+						table.row.add([$('#editNamaPerumahan').val(),
+					 	$('#editNamaPengembang option:selected').text(),$('#perumahanLokasi').val(),Action,detail]).draw().node();
+
 						$("#editSuccess").show();
+						$('#EditModal').modal('hide');
 					}
 				});
 			});
