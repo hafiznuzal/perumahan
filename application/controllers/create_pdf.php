@@ -174,8 +174,8 @@ EOD;
      $tb="";
           $tb1="";
           $this->load->model('m_report');
-          $data1= $this->m_report->tabel_pembangunan_kecamatan_all_statistic($tahun-1,$periode);
-          $data2= $this->m_report->tabel_pembangunan_kecamatan_all_statistic($tahun-2,$periode);
+          $data1= $this->m_report->tabel_pembangunan_kecamatan_all_statistic($tahun-1);
+          $data2= $this->m_report->tabel_pembangunan_kecamatan_all_statistic($tahun-2);
           $k=1;
           foreach ($data2 as $i){  
               
@@ -229,10 +229,10 @@ EOD;
        <tr style="background-color:#FFFF00;color:#0000FF;">
         
         <td width="320px" align="center"><b>TYPE RUMAH</b></td>
-        <td width="106px " align="center"> <b>(Rencana)<br>$th2</b></td>     
-        <td width="106px " align="center"> <b>(Rencana)<br>$th1</b></td>
-        <td width="106px " align="center"> <b>(Realisasi)<br>$th2</b></td>     
-        <td width="106px " align="center"> <b>(Realisasi)<br>$th1</b></td>
+        <td width="106px " align="center"> <b>(Rencana)<br>DES $th2</b></td>     
+        <td width="106px " align="center"> <b>(Rencana)<br>DES $th1</b></td>
+        <td width="106px " align="center"> <b>(Realisasi)<br>DES $th2</b></td>     
+        <td width="106px " align="center"> <b>(Realisasi)<br>DES $th1</b></td>
        </tr>
       </thead>
        $tb $tb1
@@ -620,6 +620,82 @@ public function report_pembangunan_pdf($tahun) {
 EOD;
       $pdf->writeHTML($tbl, true, false, false, false, '');
 
+       
+
+
+
+       $tb="";
+          $tb1="";
+          $this->load->model('m_report');
+          $data1= $this->m_report->tabel_statistik2_rencana($tahun-1);
+          $data1rs= $this->m_report->tabel_statistik2_realisasi($tahun-1);
+          $data2= $this->m_report->tabel_statistik2_rencana($tahun-2);
+          $data2rs= $this->m_report->tabel_statistik2_realisasi($tahun-2);
+          $k=1;
+          foreach ($data2 as $i){  
+              
+                $tb .= 
+                    "<tr>  
+                                
+                  <td width=\"320px\">RSS  : TYPE 21-27
+                  <br>RS    : TYPE 36-70
+                  <br>RM    : TYPE 70-125
+                  <br>MW  : TYPE >125
+                  <br>RUKO
+                  </td>
+                  <td width=\"106px\">".$i['RENC_RSS']."
+                  <br>".$i['RENC_RS']."
+                  <br>".$i['RENC_RM']."
+                  <br>".$i['RENC_MW']."
+                  <br>".$i['RENC_RUKO']."
+                  </td>" ;}
+          foreach ($data1 as $i){
+                  $tb .="
+                  <td width=\"106px\">".$i['RENC_RSS']."
+                  <br>".$i['RENC_RS']."
+                  <br>".$i['RENC_RM']."
+                  <br>".$i['RENC_MW']."
+                  <br>".$i['RENC_RUKO']."
+                  </td>";}
+          foreach ($data2rs as $i){  
+                   $tb .="
+                  <td width=\"106px\">".$i['REAL_RSS']."
+                  <br>".$i['REAL_RS']."
+                  <br>".$i['REAL_RM']."
+                  <br>".$i['REAL_MW']."
+                  <br>".$i['REAL_RUKO']."
+                  </td>";}
+          foreach ($data1rs as $i){
+                  $tb .="
+                  <td width=\"106px\">".$i['REAL_RSS']."
+                  <br>".$i['REAL_RS']."
+                  <br>".$i['REAL_RM']."
+                  <br>".$i['REAL_MW']."
+                  <br>".$i['REAL_RUKO']."
+                  </td>        
+                </tr> ";
+                
+                }
+      $th1=$tahun-1;
+      $th2=$tahun-2;
+      $tbl = <<<EOD
+      <table border="1" cellpadding="2" cellspacing="2">
+      <thead>
+       <tr style="background-color:#FFFF00;color:#0000FF;">
+        
+        <td width="320px" align="center"><b>TYPE RUMAH</b></td>
+        <td width="106px " align="center"> <b>(Rencana)<br>DES $th2</b></td>     
+        <td width="106px " align="center"> <b>(Rencana)<br>DES $th1</b></td>
+        <td width="106px " align="center"> <b>(Realisasi)<br>DES $th2</b></td>     
+        <td width="106px " align="center"> <b>(Realisasi)<br>DES $th1</b></td>
+       </tr>
+      </thead>
+       $tb $tb1
+      </table>
+EOD;
+
+//print_r($tbl);
+      $pdf->writeHTML($tbl, true, false, false, false, ''); 
 
 
      
@@ -752,6 +828,65 @@ EOD;
 
 $pdf->writeHTML($tbl, true, false, false, false, '');
 
+$tb="";
+          $tb1="";
+          $this->load->model('m_report');
+          $data1 = $this->m_report->tabel_statistik1($tahun-1);
+          $data2 = $this->m_report->tabel_statistik1($tahun-2);
+          
+          foreach ($data2 as $i){  
+              
+                $tb .= 
+                    "<tr>  
+                                
+                  <td width=\"320px\">JUMLAH PENGEMBANG
+                  <br>JUMLAH IJIN LOKASI
+                  <br>LUAS IJIN LOKASI
+                  <br>RENCANA TAPAK
+                  <br>PEMBEBASAN
+                  <br>TERBANGUN
+                  <br>BELUM TERBANGUN
+                  </td>
+                  <td width=\"200px\">".$i['PENGEMBANG']."
+                  <br>".$i['IJIN_LOKASI']."
+                  <br>".$i['LUAS_IJIN_LOKASI']."
+                  <br>".$i['RENCANA_TAPAK']."
+                  <br>".$i['PEMBEBASAN']."
+                  <br>".$i['TERBANGUN']."
+                  <br>".$i['BELUM_TERBANGUN']."
+                  </td>";}
+          foreach ($data1 as $i){     
+                  $tb.="<td width=\"200px\">".$i['PENGEMBANG']."
+                  <br>".$i['IJIN_LOKASI']."
+                  <br>".$i['LUAS_IJIN_LOKASI']."
+                  <br>".$i['RENCANA_TAPAK']."
+                  <br>".$i['PEMBEBASAN']."
+                  <br>".$i['TERBANGUN']."
+                  <br>".$i['BELUM_TERBANGUN']."
+                  </td>      
+                </tr> ";
+              }
+                
+                
+      $th1=$tahun-1;
+      $th2=$tahun-2;
+      $tbl = <<<EOD
+      <table border="1" cellpadding="2" cellspacing="2">
+      <thead>
+       <tr style="background-color:#FFFF00;color:#0000FF;">
+        
+        <td width="320px" align="center"><b>TYPE RUMAH</b></td>
+        <td width="200px " align="center"> <b>DES $th2</b></td>     
+        <td width="200px " align="center"> <b>DES $th1</b></td>
+       </tr>
+      </thead>
+       $tb $tb1
+      </table>
+EOD;
+
+//print_r($tbl);
+      $pdf->writeHTML($tbl, true, false, false, false, '');
+
 // $tb="";
 //           $this->load->model('report');
 //           $data= $this->report->tabel_statistik1();
@@ -799,7 +934,7 @@ $pdf->writeHTML($tbl, true, false, false, false, '');
 // EOD;
 
 //print_r($tbl);
-      $pdf->writeHTML($tbl, true, false, false, false, '');
+     
       // -----------------------------------------------------------------------------
       //Close and output PDF document
       $pdf->Output('Report_Lahan_Kabupaten_Sidoarjo_'.$tahun.'.pdf', 'I');
@@ -993,8 +1128,8 @@ $pdf->writeHTML($tbl, true, false, false, false, '');
 $tb="";
           $tb1="";
           $this->load->model('m_report');
-          $data1 = $this->m_report->tabel_lahan_kecamatan_all_statistic($tahun-1,$periode);
-          $data2 = $this->m_report->tabel_lahan_kecamatan_all_statistic($tahun-2,$periode);
+          $data1 = $this->m_report->tabel_lahan_kecamatan_all_statistic($tahun-1);
+          $data2 = $this->m_report->tabel_lahan_kecamatan_all_statistic($tahun-2);
           
           foreach ($data2 as $i){  
               
@@ -1038,8 +1173,8 @@ $tb="";
        <tr style="background-color:#FFFF00;color:#0000FF;">
         
         <td width="320px" align="center"><b>TYPE RUMAH</b></td>
-        <td width="200px " align="center"> <b>$th2</b></td>     
-        <td width="200px " align="center"> <b>$th1</b></td>
+        <td width="200px " align="center"> <b>DES $th2</b></td>     
+        <td width="200px " align="center"> <b>DES $th1</b></td>
        </tr>
       </thead>
        $tb $tb1

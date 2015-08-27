@@ -140,7 +140,7 @@ class m_report extends CI_Model
 		return $data;
 	}
 
-	public function tabel_pembangunan_kecamatan_all_statistic($tahun,$periode)
+	public function tabel_pembangunan_kecamatan_all_statistic($tahun)
 	{
 		$sql = "SELECT SUM(JML_LOKASI) AS JML_LOKASI, SUM( RENC_RSS ) AS RENC_RSS, SUM( RENC_RS ) AS RENC_RS, SUM( RENC_RM ) AS RENC_RM, SUM( RENC_MW ) AS RENC_MW, SUM( RENC_RUKO ) AS RENC_RUKO, SUM( REAL_RSS ) AS REAL_RSS, SUM( REAL_RS ) AS REAL_RS, SUM( REAL_RM ) AS REAL_RM, SUM( REAL_MW ) AS REAL_MW, SUM( REAL_RUKO ) AS REAL_RUKO
 				FROM
@@ -152,7 +152,7 @@ class m_report extends CI_Model
 				JOIN PERUSAHAAN AS PRS ON PRS.ID_PERUSAHAAN = PRM.ID_PERUSAHAAN
 				JOIN KECAMATAN AS KEC ON KEC.ID_KECAMATAN = LOK.ID_KECAMATAN
 				WHERE PEM.TAHUN = '$tahun'
-				AND PEM.TRIWULAN = '$periode'
+			
 				GROUP BY KEC.ID_KECAMATAN) AS TBL";
 		$query = $this->db->query($sql);
 		$data = $query->result_array();
@@ -173,7 +173,7 @@ class m_report extends CI_Model
 		return $data;
 	}
 
-	public function tabel_lahan_kecamatan_all_statistic($tahun,$periode)
+	public function tabel_lahan_kecamatan_all_statistic($tahun)
 	{
 		$sql = "SELECT SUM(JML_PENGEMBANG) AS JML_PENGEMBANG, SUM(JML_IJIN_LOKASI) AS JML_IJIN_LOKASI, SUM(LUAS) AS LUAS, SUM(RENCANA_TAPAK) AS RENCANA_TAPAK, SUM(PEMBEBASAN) AS PEMBEBASAN, SUM(TERBANGUN) AS TERBANGUN, SUM(BELUM_TERBANGUN) AS BELUM_TERBANGUN
 				FROM(
@@ -184,7 +184,7 @@ class m_report extends CI_Model
 				JOIN IJIN ON IJIN.ID_PERUMAHAN = PRM.ID_PERUMAHAN
 				JOIN KECAMATAN AS KEC ON KEC.ID_KECAMATAN = LOK.ID_KECAMATAN
 				JOIN PERUSAHAAN AS PRS ON PRS.ID_PERUSAHAAN = PRM.ID_PERUSAHAAN
-				WHERE  PEM.TAHUN = '$tahun' AND PEM.TRIWULAN = '$periode'
+				WHERE  PEM.TAHUN = '$tahun'
 				GROUP BY KEC.ID_KECAMATAN) AS TBLI";
 		$query = $this->db->query($sql);
 		$data = $query->result_array();

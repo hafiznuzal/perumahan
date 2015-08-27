@@ -390,10 +390,8 @@ class Report extends CI_Controller
    		$this->excel->getActiveSheet()->getStyle('Q10'.':'.'Q'.($numCell))->applyFromArray($BStyle);
 
         
-        $data= $this->m_report->tabel_statistik2_rencana($tahun);
-        $data1= $this->m_report->tabel_statistik2_realisasi($tahun);
-        $dataS= $this->m_report->tabel_statistik2_rencana($tahun-1);
-        $data1S= $this->m_report->tabel_statistik2_realisasi($tahun-1);
+        	$data1= $this->m_report->tabel_pembangunan_kecamatan_all_statistic($tahun-1);
+          $data2= $this->m_report->tabel_pembangunan_kecamatan_all_statistic($tahun-2);
 
         	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+4), "TYPE RUMAH");
         	$this->excel->getActiveSheet()->mergeCells('D'.($numCell+4).':'.'D'.($numCell+5));
@@ -446,7 +444,7 @@ class Report extends CI_Controller
    			$this->excel->getActiveSheet()->mergeCells('I'.($numCell+10).':'.'J'.($numCell+10));
 
         	
-        	foreach ($data as $key) {
+        	foreach ($data2 as $key) {
         		$this->excel->getActiveSheet()->setCellValue('E'.($numCell+6), $key['RENC_RSS']);
 	        	$this->excel->getActiveSheet()->setCellValue('E'.($numCell+7), $key['RENC_RS']);
 	        	$this->excel->getActiveSheet()->setCellValue('E'.($numCell+8), $key['RENC_RM']);
@@ -456,7 +454,7 @@ class Report extends CI_Controller
 	        	
         	}
 
-        	foreach ($data1 as $key) {
+        	foreach ($data2 as $key) {
         		$this->excel->getActiveSheet()->setCellValue('G'.($numCell+6), $key['REAL_RSS']);
 	        	$this->excel->getActiveSheet()->setCellValue('G'.($numCell+7), $key['REAL_RS']);
 	        	$this->excel->getActiveSheet()->setCellValue('G'.($numCell+8), $key['REAL_RM']);
@@ -465,7 +463,7 @@ class Report extends CI_Controller
 	        	//$this->excel->getActiveSheet()->setCellValue('C'.($numCell+8), $key['BELUM_TERBANGUN']);
 	        }
 
-	        foreach ($dataS as $key) {
+	        foreach ($data1 as $key) {
         		$this->excel->getActiveSheet()->setCellValue('F'.($numCell+6), $key['RENC_RSS']);
 	        	$this->excel->getActiveSheet()->setCellValue('F'.($numCell+7), $key['RENC_RS']);
 	        	$this->excel->getActiveSheet()->setCellValue('F'.($numCell+8), $key['RENC_RM']);
@@ -475,7 +473,7 @@ class Report extends CI_Controller
 	        	
         	}
 
-        	foreach ($data1S as $key) {
+        	foreach ($data1 as $key) {
         		$this->excel->getActiveSheet()->setCellValue('I'.($numCell+6), $key['REAL_RSS']);
 	        	$this->excel->getActiveSheet()->setCellValue('I'.($numCell+7), $key['REAL_RS']);
 	        	$this->excel->getActiveSheet()->setCellValue('I'.($numCell+8), $key['REAL_RM']);
@@ -843,33 +841,84 @@ class Report extends CI_Controller
    		$this->excel->getActiveSheet()->getStyle('T10'.':'.'T'.($numCell))->applyFromArray($BStyle);
    		$this->excel->getActiveSheet()->getStyle('U10'.':'.'U'.($numCell))->applyFromArray($BStyle);
 
-        $this->load->model('m_report');
-       // $data= $this->m_report->tabel_pengembang($tahun);
-        $data1= $this->m_report->tabel_statistik1($tahun);
+       //  $this->load->model('m_report');
+       // // $data= $this->m_report->tabel_pengembang($tahun);
+       //  $data1= $this->m_report->tabel_statistik1($tahun);
         	
-        	$numCell=$numCell+1;
+       //  	$numCell=$numCell+1;
 
 
-        	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+2), "Jumlah Pengembang");
-        	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+3), "Ijin Lokasi");
-        	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+4), "Luas Ijin Lokasi");
-        	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+5), "Rencana Tapak");
-        	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+6), "Pembebasan");
-        	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+7), "Terbangun");
-        	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+8), "Belum Terbangun");
+       //  	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+2), "Jumlah Pengembang");
+       //  	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+3), "Ijin Lokasi");
+       //  	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+4), "Luas Ijin Lokasi");
+       //  	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+5), "Rencana Tapak");
+       //  	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+6), "Pembebasan");
+       //  	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+7), "Terbangun");
+       //  	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+8), "Belum Terbangun");
 
-        	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+1), "Des 2014");
+       //  	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+1), "Des 2014");
 
-        	foreach ($data1 as $key) {
-        		$this->excel->getActiveSheet()->setCellValue('D'.($numCell+2), $key['PENGEMBANG']);
-        		$this->excel->getActiveSheet()->setCellValue('D'.($numCell+3), $key['IJIN_LOKASI']);
-	        	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+4), $key['LUAS_IJIN_LOKASI']);
-	        	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+5), $key['RENCANA_TAPAK']);
-	        	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+6), $key['PEMBEBASAN']);
-	        	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+7), $key['TERBANGUN']);
-	        	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+8), $key['BELUM_TERBANGUN']);
+       //  	foreach ($data1 as $key) {
+       //  		$this->excel->getActiveSheet()->setCellValue('D'.($numCell+2), $key['PENGEMBANG']);
+       //  		$this->excel->getActiveSheet()->setCellValue('D'.($numCell+3), $key['IJIN_LOKASI']);
+	      //   	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+4), $key['LUAS_IJIN_LOKASI']);
+	      //   	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+5), $key['RENCANA_TAPAK']);
+	      //   	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+6), $key['PEMBEBASAN']);
+	      //   	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+7), $key['TERBANGUN']);
+	      //   	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+8), $key['BELUM_TERBANGUN']);
 	        	
-        	}
+       //  	}
+
+   		$this->load->model('m_report');
+        $data1 = $this->m_report->tabel_statistik1($tahun-1);
+        $data2 = $this->m_report->tabel_statistik1($tahun-2);
+        
+        	//$this->excel->getActiveSheet()->setCellValue('C'.($numCell+4), " ");
+        	//$this->excel->getActiveSheet()->mergeCells('C'.($numCell+4).':'.'C'.($numCell+5));
+			//$this->excel->getActiveSheet()->getStyle('C'.($numCell+4))->getAlignment()->setWrapText(true);
+        	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+4), "JUMLAH PENGEMBANG");
+        	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+5), "JUMLAH IJIN LOKASI");
+        	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+6), "LUAS IJIN LOKASI");
+        	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+7), "RENCANA TAPAK");
+        	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+8), "PEMBEBASAN");
+        	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+9), "TERBANGUN");
+        	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+10), "BELUM TERBANGUN");
+        	//$this->excel->getActiveSheet()->setCellValue('B'.($numCell+8), "JUMLAH");
+        	$th1=$tahun-1;
+        	$th2=$tahun-2;
+        	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+3), "Des ".$th2);
+        	
+			$this->excel->getActiveSheet()->setCellValue('E'.($numCell+3), "Des ".$th1);
+        	
+			$BStyle = array('borders' => array('outline' => array('style' => PHPExcel_Style_Border::BORDER_THIN)));		
+
+			/** border statistic **/
+			$this->excel->getActiveSheet()->getStyle('C'.($numCell+3).':'.'C'.($numCell+10))->applyFromArray($BStyle);
+	   		$this->excel->getActiveSheet()->getStyle('D'.($numCell+3).':'.'D'.($numCell+10))->applyFromArray($BStyle);
+   			$this->excel->getActiveSheet()->getStyle('E'.($numCell+3).':'.'E'.($numCell+10))->applyFromArray($BStyle);
+   			
+
+        	
+        	foreach ($data2 as $key) {
+        		$this->excel->getActiveSheet()->setCellValue('D'.($numCell+4), $key['PENGEMBANG']);
+        		$this->excel->getActiveSheet()->setCellValue('D'.($numCell+5), $key['IJIN_LOKASI']);
+	        	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+6), $key['LUAS_IJIN_LOKASI']);
+	        	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+7), $key['RENCANA_TAPAK']);
+	        	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+8), $key['PEMBEBASAN']);	        	
+	        	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+9), $key['TERBANGUN']);
+	        	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+10), $key['BELUM_TERBANGUN']);
+	        	
+				}
+			foreach ($data1 as $key) {
+        		$this->excel->getActiveSheet()->setCellValue('E'.($numCell+4), $key['PENGEMBANG']);
+        		$this->excel->getActiveSheet()->setCellValue('E'.($numCell+5), $key['IJIN_LOKASI']);
+	        	$this->excel->getActiveSheet()->setCellValue('E'.($numCell+6), $key['LUAS_IJIN_LOKASI']);
+	        	$this->excel->getActiveSheet()->setCellValue('E'.($numCell+7), $key['RENCANA_TAPAK']);
+	        	$this->excel->getActiveSheet()->setCellValue('E'.($numCell+8), $key['PEMBEBASAN']);	        	
+	        	$this->excel->getActiveSheet()->setCellValue('E'.($numCell+9), $key['TERBANGUN']);
+	        	$this->excel->getActiveSheet()->setCellValue('E'.($numCell+10), $key['BELUM_TERBANGUN']);
+	        	
+				}	
 
         
    		$this->excel->getActiveSheet()->setCellValue('B5', "Propinsi");
@@ -892,7 +941,7 @@ class Report extends CI_Controller
         	
         /** Borders for heading */
    		$this->excel->getActiveSheet()->getStyle('B7:U9')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-   		 	
+   		$this->excel->getActiveSheet()->getStyle('C'.($numCell+3).':'.'E'.($numCell+3))->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
          $filename='Report_Lahan_Kabupaten_Sidoarjo_'.$tahun.'.xls'; //save our workbook as this file name
 		 header('Content-Type: application/vnd.ms-excel'); //mime type
 		 header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
@@ -1266,8 +1315,8 @@ class Report extends CI_Controller
      //    $dataS= $this->m_report->tabel_statistik2_rencana($tahun-1);
      //    $data1S= $this->m_report->tabel_statistik2_realisasi($tahun-1);
    		
-        $data1= $this->m_report->tabel_pembangunan_kecamatan_all_statistic($tahun-1,$periode);
-        $data2= $this->m_report->tabel_pembangunan_kecamatan_all_statistic($tahun-2,$periode);
+        $data1= $this->m_report->tabel_pembangunan_kecamatan_all_statistic($tahun-1);
+        $data2= $this->m_report->tabel_pembangunan_kecamatan_all_statistic($tahun-2);
         
         	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+4), "TYPE RUMAH");
         	$this->excel->getActiveSheet()->mergeCells('C'.($numCell+4).':'.'C'.($numCell+5));
@@ -1288,10 +1337,12 @@ class Report extends CI_Controller
         	$this->excel->getActiveSheet()->mergeCells('G'.($numCell+4).':'.'J'.($numCell+4));
 			$this->excel->getActiveSheet()->getStyle('G'.($numCell+4))->getAlignment()->setWrapText(true);
 
-			$this->excel->getActiveSheet()->setCellValue('D'.($numCell+5), "Des");
-			$this->excel->getActiveSheet()->setCellValue('E'.($numCell+5), "Des");
-			$this->excel->getActiveSheet()->setCellValue('G'.($numCell+5), "Des");
-			$this->excel->getActiveSheet()->setCellValue('I'.($numCell+5), "Des");
+			$th2=$tahun-2;	
+			$th1=$tahun-1;	
+			$this->excel->getActiveSheet()->setCellValue('D'.($numCell+5), "Des ".$th2);
+			$this->excel->getActiveSheet()->setCellValue('E'.($numCell+5), "Des ".$th1);
+			$this->excel->getActiveSheet()->setCellValue('G'.($numCell+5), "Des ".$th2);
+			$this->excel->getActiveSheet()->setCellValue('I'.($numCell+5), "Des ".$th1);
 
 
 			/** border statistic **/
@@ -1328,7 +1379,7 @@ class Report extends CI_Controller
 
 
         	
-        	foreach ($data1 as $key) {
+        	foreach ($data2 as $key) {
         		$this->excel->getActiveSheet()->setCellValue('D'.($numCell+6), $key['RENC_RSS']);
 	        	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+7), $key['RENC_RS']);
 	        	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+8), $key['RENC_RM']);
@@ -1343,7 +1394,7 @@ class Report extends CI_Controller
 	        	$this->excel->getActiveSheet()->setCellValue('G'.($numCell+10), $key['REAL_RUKO']);
 	        	//$this->excel->getActiveSheet()->setCellValue('C'.($numCell+8), $key['BELUM_TERBANGUN']);
 				}
-			foreach ($data2 as $key) {
+			foreach ($data1 as $key) {
         		$this->excel->getActiveSheet()->setCellValue('E'.($numCell+6), $key['RENC_RSS']);
 	        	$this->excel->getActiveSheet()->setCellValue('E'.($numCell+7), $key['RENC_RS']);
 	        	$this->excel->getActiveSheet()->setCellValue('E'.($numCell+8), $key['RENC_RM']);
@@ -1566,7 +1617,8 @@ class Report extends CI_Controller
         
 
         $this->load->model('m_report');
-        $data= $this->m_report->tabel_lahan_kecamatan_all_statistic($tahun,$periode);
+        $data2= $this->m_report->tabel_lahan_kecamatan_all_statistic($tahun-2);
+        $data1= $this->m_report->tabel_lahan_kecamatan_all_statistic($tahun-1);
         
         	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+4), " ");
         	//$this->excel->getActiveSheet()->mergeCells('C'.($numCell+4).':'.'C'.($numCell+5));
@@ -1579,10 +1631,11 @@ class Report extends CI_Controller
         	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+10), "TERBANGUN");
         	$this->excel->getActiveSheet()->setCellValue('C'.($numCell+11), "BELUM TERBANGUN");
         	//$this->excel->getActiveSheet()->setCellValue('B'.($numCell+8), "JUMLAH");
-
-        	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+4), "Des 2014");
+        	$th1=$tahun-1;
+        	$th2=$tahun-2;
+        	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+4), "Des " .$th2);
         	
-			$this->excel->getActiveSheet()->setCellValue('E'.($numCell+4), "Des 2014");
+			$this->excel->getActiveSheet()->setCellValue('E'.($numCell+4), "Des " .$th1);
         	
 			$BStyle = array('borders' => array('outline' => array('style' => PHPExcel_Style_Border::BORDER_THIN)));		
 
@@ -1593,7 +1646,7 @@ class Report extends CI_Controller
    			
 
         	
-        	foreach ($data as $key) {
+        	foreach ($data2 as $key) {
         		$this->excel->getActiveSheet()->setCellValue('D'.($numCell+5), $key['JML_PENGEMBANG']);
         		$this->excel->getActiveSheet()->setCellValue('D'.($numCell+6), $key['JML_IJIN_LOKASI']);
 	        	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+7), $key['LUAS']);
@@ -1603,6 +1656,17 @@ class Report extends CI_Controller
 	        	$this->excel->getActiveSheet()->setCellValue('D'.($numCell+11), $key['BELUM_TERBANGUN']);
 	        	
 				}
+
+			foreach ($data1 as $key) {
+        		$this->excel->getActiveSheet()->setCellValue('E'.($numCell+5), $key['JML_PENGEMBANG']);
+        		$this->excel->getActiveSheet()->setCellValue('E'.($numCell+6), $key['JML_IJIN_LOKASI']);
+	        	$this->excel->getActiveSheet()->setCellValue('E'.($numCell+7), $key['LUAS']);
+	        	$this->excel->getActiveSheet()->setCellValue('E'.($numCell+8), $key['RENCANA_TAPAK']);
+	        	$this->excel->getActiveSheet()->setCellValue('E'.($numCell+9), $key['PEMBEBASAN']);	        	
+	        	$this->excel->getActiveSheet()->setCellValue('E'.($numCell+10), $key['TERBANGUN']);
+	        	$this->excel->getActiveSheet()->setCellValue('E'.($numCell+11), $key['BELUM_TERBANGUN']);
+	        	
+				}	
 
         /** Borders for outside border */
      	$BStyle = array('borders' => array('outline' => array('style' => PHPExcel_Style_Border::BORDER_THIN)));
