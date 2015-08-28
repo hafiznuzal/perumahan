@@ -55,9 +55,8 @@ p {
 </head>
 <body>
 	<div id="container">
-		<!-- <h1><?php echo $heading; ?></h1>
-		<?php echo $message; ?> -->
-		<h1>ERROR DB</h1>
+		<h1><?php echo $heading; ?></h1>
+		<?php echo $message; ?>
 	</div>
 </body>
 </html>
