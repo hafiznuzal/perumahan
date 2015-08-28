@@ -31,7 +31,7 @@ class Report extends CI_Controller
 		
 	}
 
-	public function index($tahun,$periode)
+	public function index($tahun='',$periode='')
 	{
 		$this->sesi['tahun']=$tahun;
 		$this->sesi['bulan']=$periode;

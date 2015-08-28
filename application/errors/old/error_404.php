@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Error</title>
+<title>404 Page Not Found</title>
 <style type="text/css">
 
 ::selection{ background-color: #E13300; color: white; }
@@ -55,11 +55,8 @@ p {
 </head>
 <body>
 	<div id="container">
-		<!-- <h1><?php echo $heading; ?></h1>
-		<?php echo $message; ?> -->
-		<h1>ERROR GENERAL</h1>
-
-		<?php redirect(site_url()."admin"); ?>
+		<h1><?php echo $heading; ?></h1>
+		<?php echo $message; ?>
 	</div>
 </body>
 </html>
