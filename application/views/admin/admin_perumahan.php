@@ -528,106 +528,116 @@
 				// var id_lokasis = "";
 				// for (var i = 0; i < temp.length; i++) id_lokasis += ($(temp[i]).attr("id") + " ");
 				// id_lokasis = id_lokasis.slice(0, -1);
-				var table=$('#dataTable').DataTable();
-				if($('#tahunOpt').val()!=null && $('#periodeOpt').val()!=null && $('#perumahanOpt').val()!=null)
-				{
-					var datas = {
-						"nama_perumahan": $("#addNamaPerumahan").val(),
-						"lokasi": $("#addNamaLokasi").val(),
-						"id_pengembang": $("#addNamaPengembang").val(),
-						"addNoIjin": $("#addNoIjin").val(),
-						"addTglIjin": $("#addTglIjin").val(),
-						"addLuasIjin": $("#addLuasIjin").val(),
-						"addRencanaTapakIjin": $("#addRencanaTapakIjin").val(),
-						"addPembebasanIjin": $("#addPembebasanIjin").val(),
-						"addTerbangunIjin": $("#addTerbangunIjin").val(),
-						"addBelumTerbangunIjin": $("#addBelumTerbangunIjin").val(),
-						"addFSAlokasiIjin": $("#addFSAlokasiIjin").val(),
-						"addFSPembebasanIjin": $("#addFSPembebasanIjin").val(),
-						"addFSSudahMatangIjin": $("#addFSSudahMatangIjin").val(),
-						"addCatatanIjin": $("#addCatatanIjin").val(),
-						"addAktifPembangunanIjin": $('[name="addAktifPembangunanIjin"]:radio:checked').val(),
-						"addAktifBerhentiIjin": $('[name="addAktifBerhentiIjin"]:radio:checked').val(),
-						"addAktifSelesaiIjin": $('[name="addAktifSelesaiIjin"]:radio:checked').val(),
-						"addTidakAktifIjin": $('[name="addTidakAktifIjin"]:radio:checked').val(),
-						
 
-						
-						"id_perumahan" : $('#perumahanOpt').val(),
-						"id_kombinasi" : $('#addKombinasi').val(),
-						"id_lokasi" : $('#addLokasi').val(),
-						"renc_rss": $('#addRencRSS').val(),
-						"renc_rs": $('#addRencRS').val(),
-						"renc_rm": $('#addRencRM').val(),
-						"renc_mw": $('#addRencMW').val(),
-						"renc_ruko": $('#addRencRuko').val(),
-						"real_rss": $('#addRealRSS').val(),
-						"real_rs": $('#addRealRS').val(),
-						"real_rm": $('#addRealRM').val(),
-						"real_mw": $('#addRealMW').val(),
-						"real_ruko": $('#addRealRuko').val(),
-						"catatan": $('#addCatatan').val()
-					};
-					$.ajax({
-						url: '<?php echo site_url(); ?>perumahan/add/?mode=import',
-						type: 'GET',
-						data: datas,
-						dataType: 'json',
-						success: function(results){
-							$("#AddModal").modal('hide');
-							// $("#page_container").html(results);
-							var Action=	"<a class =\"edit_btn\" href=\"#\" id=\""+results+"\"><i class=\"fa fa-edit fa-2x\"></i></a>";
-							var detail ="<a class=\"btn btn-info\" href=\"<?php echo site_url(); ?>detil_proyek/index/"+results+"\">Detail</a>"
-							var rowNode = table.row.add([$("#addNamaPerumahan").val(),
-							$("#addNamaPengembang option:selected").text(),$("#addNamaLokasi option:selected").text(),Action,detail]).draw().node();
-							$(rowNode).css('color','red').animate({color:"black"});
-
-							$("#addSuccess").show();
-
-						}
-					});		
+				if ($('#addNamaPerumahan').val().length === 0 && $('#addNoIjin').val().length === 0 && $('#addTglIjin').val().length === 0 && $('#addLuasIjin').val().length === 0 ) {
+					bootbox.alert("Mohon Lengkapi Isian");
+				}
+				else if ($('#addNamaPerumahan').val().length === 0 || $('#addNoIjin').val().length === 0 || $('#addTglIjin').val().length === 0 || $('#addLuasIjin').val().length === 0 ) {
+					bootbox.alert("Mohon Lengkapi Isian");
 				}
 				else
 				{
-					var datas = {
-						"nama_perumahan": $("#addNamaPerumahan").val(),
-						"lokasi": $("#addNamaLokasi").val(),
-						"id_pengembang": $("#addNamaPengembang").val(),
-						"addNoIjin": $("#addNoIjin").val(),
-						"addTglIjin": $("#addTglIjin").val(),
-						"addLuasIjin": $("#addLuasIjin").val(),
-						"addRencanaTapakIjin": $("#addRencanaTapakIjin").val(),
-						"addPembebasanIjin": $("#addPembebasanIjin").val(),
-						"addTerbangunIjin": $("#addTerbangunIjin").val(),
-						"addBelumTerbangunIjin": $("#addBelumTerbangunIjin").val(),
-						"addFSAlokasiIjin": $("#addFSAlokasiIjin").val(),
-						"addFSPembebasanIjin": $("#addFSPembebasanIjin").val(),
-						"addFSSudahMatangIjin": $("#addFSSudahMatangIjin").val(),
-						"addCatatanIjin": $("#addCatatanIjin").val(),
-						"addAktifPembangunanIjin": $('[name="addAktifPembangunanIjin"]:radio:checked').val(),
-						"addAktifBerhentiIjin": $('[name="addAktifBerhentiIjin"]:radio:checked').val(),
-						"addAktifSelesaiIjin": $('[name="addAktifSelesaiIjin"]:radio:checked').val(),
-						"addTidakAktifIjin": $('[name="addTidakAktifIjin"]:radio:checked').val(),
-					};
-					$.ajax({
-						url: '<?php echo site_url(); ?>perumahan/add/',
-						type: 'GET',
-						data: datas,
-						dataType: 'json',
-						success: function(results){
-							$("#AddModal").modal('hide');
-							// $("#page_container").html(results);
+					var table=$('#dataTable').DataTable();
+					if($('#tahunOpt').val()!=null && $('#periodeOpt').val()!=null && $('#perumahanOpt').val()!=null)
+					{
+						var datas = {
+							"nama_perumahan": $("#addNamaPerumahan").val(),
+							"lokasi": $("#addNamaLokasi").val(),
+							"id_pengembang": $("#addNamaPengembang").val(),
+							"addNoIjin": $("#addNoIjin").val(),
+							"addTglIjin": $("#addTglIjin").val(),
+							"addLuasIjin": $("#addLuasIjin").val(),
+							"addRencanaTapakIjin": $("#addRencanaTapakIjin").val(),
+							"addPembebasanIjin": $("#addPembebasanIjin").val(),
+							"addTerbangunIjin": $("#addTerbangunIjin").val(),
+							"addBelumTerbangunIjin": $("#addBelumTerbangunIjin").val(),
+							"addFSAlokasiIjin": $("#addFSAlokasiIjin").val(),
+							"addFSPembebasanIjin": $("#addFSPembebasanIjin").val(),
+							"addFSSudahMatangIjin": $("#addFSSudahMatangIjin").val(),
+							"addCatatanIjin": $("#addCatatanIjin").val(),
+							"addAktifPembangunanIjin": $('[name="addAktifPembangunanIjin"]:radio:checked').val(),
+							"addAktifBerhentiIjin": $('[name="addAktifBerhentiIjin"]:radio:checked').val(),
+							"addAktifSelesaiIjin": $('[name="addAktifSelesaiIjin"]:radio:checked').val(),
+							"addTidakAktifIjin": $('[name="addTidakAktifIjin"]:radio:checked').val(),
 							
-							var Action=	"<a class =\"edit_btn\" href=\"#\" id=\""+results+"\"><i class=\"fa fa-edit fa-2x\"></i></a>";
-							var detail ="<a class=\"btn btn-info\" href=\"<?php echo site_url(); ?>detil_proyek/index/"+results+"\">Detail</a>"
-							var rowNode = table.row.add([$("#addNamaPerumahan").val(),
-							$("#addNamaPengembang option:selected").text(),$("#addNamaLokasi option:selected").text(),Action,detail]).draw().node();
-							$(rowNode).css('color','red').animate({color:"black"});
 
-							$("#addSuccess").show();
-						}
-					});	
-				}
+							
+							"id_perumahan" : $('#perumahanOpt').val(),
+							"id_kombinasi" : $('#addKombinasi').val(),
+							"id_lokasi" : $('#addLokasi').val(),
+							"renc_rss": $('#addRencRSS').val(),
+							"renc_rs": $('#addRencRS').val(),
+							"renc_rm": $('#addRencRM').val(),
+							"renc_mw": $('#addRencMW').val(),
+							"renc_ruko": $('#addRencRuko').val(),
+							"real_rss": $('#addRealRSS').val(),
+							"real_rs": $('#addRealRS').val(),
+							"real_rm": $('#addRealRM').val(),
+							"real_mw": $('#addRealMW').val(),
+							"real_ruko": $('#addRealRuko').val(),
+							"catatan": $('#addCatatan').val()
+						};
+						$.ajax({
+							url: '<?php echo site_url(); ?>perumahan/add/?mode=import',
+							type: 'GET',
+							data: datas,
+							dataType: 'json',
+							success: function(results){
+								$("#AddModal").modal('hide');
+								// $("#page_container").html(results);
+								var Action=	"<a class =\"edit_btn\" href=\"#\" id=\""+results+"\"><i class=\"fa fa-edit fa-2x\"></i></a>";
+								var detail ="<a class=\"btn btn-info\" href=\"<?php echo site_url(); ?>detil_proyek/index/"+results+"\">Detail</a>"
+								var rowNode = table.row.add([$("#addNamaPerumahan").val(),
+								$("#addNamaPengembang option:selected").text(),$("#addNamaLokasi option:selected").text(),Action,detail]).draw().node();
+								$(rowNode).css('color','red').animate({color:"black"});
+
+								$("#addSuccess").show();
+
+							}
+						});		
+					}
+					else
+					{
+						var datas = {
+							"nama_perumahan": $("#addNamaPerumahan").val(),
+							"lokasi": $("#addNamaLokasi").val(),
+							"id_pengembang": $("#addNamaPengembang").val(),
+							"addNoIjin": $("#addNoIjin").val(),
+							"addTglIjin": $("#addTglIjin").val(),
+							"addLuasIjin": $("#addLuasIjin").val(),
+							"addRencanaTapakIjin": $("#addRencanaTapakIjin").val(),
+							"addPembebasanIjin": $("#addPembebasanIjin").val(),
+							"addTerbangunIjin": $("#addTerbangunIjin").val(),
+							"addBelumTerbangunIjin": $("#addBelumTerbangunIjin").val(),
+							"addFSAlokasiIjin": $("#addFSAlokasiIjin").val(),
+							"addFSPembebasanIjin": $("#addFSPembebasanIjin").val(),
+							"addFSSudahMatangIjin": $("#addFSSudahMatangIjin").val(),
+							"addCatatanIjin": $("#addCatatanIjin").val(),
+							"addAktifPembangunanIjin": $('[name="addAktifPembangunanIjin"]:radio:checked').val(),
+							"addAktifBerhentiIjin": $('[name="addAktifBerhentiIjin"]:radio:checked').val(),
+							"addAktifSelesaiIjin": $('[name="addAktifSelesaiIjin"]:radio:checked').val(),
+							"addTidakAktifIjin": $('[name="addTidakAktifIjin"]:radio:checked').val(),
+						};
+						$.ajax({
+							url: '<?php echo site_url(); ?>perumahan/add/',
+							type: 'GET',
+							data: datas,
+							dataType: 'json',
+							success: function(results){
+								$("#AddModal").modal('hide');
+								// $("#page_container").html(results);
+								
+								var Action=	"<a class =\"edit_btn\" href=\"#\" id=\""+results+"\"><i class=\"fa fa-edit fa-2x\"></i></a>";
+								var detail ="<a class=\"btn btn-info\" href=\"<?php echo site_url(); ?>detil_proyek/index/"+results+"\">Detail</a>"
+								var rowNode = table.row.add([$("#addNamaPerumahan").val(),
+								$("#addNamaPengembang option:selected").text(),$("#addNamaLokasi option:selected").text(),Action,detail]).draw().node();
+								$(rowNode).css('color','red').animate({color:"black"});
+
+								$("#addSuccess").show();
+							}
+						});	
+					}					
+				}	
 				
 			});
 				

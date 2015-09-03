@@ -153,6 +153,8 @@
 			 </div>
 		</div>
 	</div>
+
+
 		<script>
 
 			$(document).ready(function () {
@@ -222,38 +224,57 @@
 			});
 
 			$("#saveAdd").click(function(e){
-				var data={
-						"nama_perusahaan": $('#addPerusahaan').val(),
-						"pimpinan": $('#addPimpinan').val(),
-						"alamat": $('#addAlamat').val(),
-						"telp": $('#addTelepon').val(),
-						"fax": $('#addFax').val()
-					};
-				var table=$('#dataTable').DataTable();
-				$.ajax({
-					url: '<?php echo site_url(); ?>pengembang/add/',
-					type: 'GET',
-					data: data,
-					dataType: 'json',
-					success: function(results){
-						
-						
-					var Action=	"<a class =\"edit_btn\" href=\"#\" id=\""+results[0].id_perusahaan+"\"><i class=\"fa fa-edit fa-2x\"></i></a><a class =\"del_btn\" href=\"#\" id=\""+results[0].id_perusahaan+"\"><i class=\"fa fa-trash fa-2x\"></i></a>";
-						
-						//$("#page_container").html(results);
-
-						$("#addSuccess").show();
-						$('#AddModal').modal('hide');
-
-						var rowNode = table.row.add([$('#addPerusahaan').val(),
-							$('#addPimpinan').val(),$('#addAlamat').val(),
-							$('#addTelepon').val(),
-							$('#addFax').val(),Action]).draw().node();
-
-						$(rowNode).css('color','red').animate({color:"black"});
-						
+				
+				if ($('#addPerusahaan').val()==''&& $('#addPimpinan').val()==''&& $('#addAlamat').val()==''&& $('#addFax').val() =='') {
+						bootbox.alert("Mohon Lengkapi Isian");
 					}
-				});
+
+				else if ($('#addPerusahaan').val()==''|| $('#addPimpinan').val()==''|| $('#addAlamat').val()==''|| $('#addFax').val() =='') {
+						bootbox.alert("Mohon Lengkapi Isian");
+					}
+					
+
+					else
+					{
+						var data={
+							"nama_perusahaan": $('#addPerusahaan').val(),
+							"pimpinan": $('#addPimpinan').val(),
+							"alamat": $('#addAlamat').val(),
+							"telp": $('#addTelepon').val(),
+							"fax": $('#addFax').val()
+						};
+
+						var table=$('#dataTable').DataTable();
+						$.ajax({
+							url: '<?php echo site_url(); ?>pengembang/add/',
+							type: 'GET',
+							data: data,
+							dataType: 'json',
+							success: function(results){
+								
+								
+							var Action=	"<a class =\"edit_btn\" href=\"#\" id=\""+results[0].id_perusahaan+"\"><i class=\"fa fa-edit fa-2x\"></i></a><a class =\"del_btn\" href=\"#\" id=\""+results[0].id_perusahaan+"\"><i class=\"fa fa-trash fa-2x\"></i></a>";
+								
+								//$("#page_container").html(results);
+
+								$("#addSuccess").show();
+								$('#AddModal').modal('hide');
+
+								var rowNode = table.row.add([$('#addPerusahaan').val(),
+									$('#addPimpinan').val(),$('#addAlamat').val(),
+									$('#addTelepon').val(),
+									$('#addFax').val(),Action]).draw().node();
+
+								$(rowNode).css('color','red').animate({color:"black"});
+								
+							}
+						});
+					}
+
+					// if (data.nama_perusahaan==''&&data.pimpinan==''&&data.telp==''&&data.fax=='') {
+					// 	bootbox.alert("Mohon Lengkapi Isian",function())
+					// };
+				
 			});
 			
 			$('#saveEdit').click(function(e) {

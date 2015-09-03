@@ -202,24 +202,38 @@
 				    mapedit.invalidateSize();
 				  }, 10);
 				 });
+				
 				$("#saveAdd").click(function(e){
-					var data= {
-						"nama_lokasi": $('#addLokasi').val(),
-						"latitude": $('#longitudeadd').text(),
-						"longitude": $('#latitudeadd').text(),
-						"id_kecamatan": $('#addIdkecamatan').val(),
-					};
-					$.ajax({
-						url: '<?php echo site_url(); ?>lokasi/add/',
-						type: 'GET',
-						data: data,
-						dataType: 'html',
-						success: function(results){
-							$("#addSuccess").show();
-							$("#AddModal").modal('hide');
-							window.setTimeout(window.location.reload(true),2000);
-						}
-					});
+
+					if ($('#addLokasi').val().length === 0 && $('#longitudeadd').text().length === 0 && $('#latitudeadd').text().length === 0) {
+						bootbox.alert("Mohon Lengkapi Isian");
+					}
+					else if ($('#addLokasi').val().length === 0 || $('#longitudeadd').text().length === 0 || $('#latitudeadd').text().length === 0) {
+						bootbox.alert("Mohon Lengkapi Isian");
+					}
+					else
+					{
+							var data= {
+							"nama_lokasi": $('#addLokasi').val(),
+							"latitude": $('#longitudeadd').text(),
+							"longitude": $('#latitudeadd').text(),
+							"id_kecamatan": $('#addIdkecamatan').val(),
+						};
+						$.ajax({
+							url: '<?php echo site_url(); ?>lokasi/add/',
+							type: 'GET',
+							data: data,
+							dataType: 'html',
+							success: function(results){
+								$("#addSuccess").show();
+								$("#AddModal").modal('hide');
+								window.setTimeout(window.location.reload(true),2000);
+							}
+						});
+
+
+					}
+					
 				});
 
 				$("#saveEdit").click(function(e){

@@ -48,7 +48,7 @@
 	<script src="<?php echo base_url('assets/js/plugins/dataTables/jquery.dataTables.js')?>"></script>
 	<script src="<?php echo base_url('assets/js/plugins/dataTables/dataTables.bootstrap.js')?>"></script>
     <script src="<?php echo base_url('assets/js/ajaxfileupload.js')?>"></script>
-
+    <script src="<?php echo base_url('assets/js/bootbox.js')?>"></script>
 
 	<!--LEAFLET-->
 	<link rel="stylesheet" href="<?php echo base_url('assets/css/leaflet.css')?>" />
